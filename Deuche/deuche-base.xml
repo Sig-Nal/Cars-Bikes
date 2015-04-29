@@ -7,7 +7,7 @@
     <description>2 chevaux Citroen</description>
     <author>BARANGER Emmanuel (3D), Detlef Faber (FDM))</author>
     <status>alpha</status>
-    <version>2.0</version>
+    <version>2.1</version>
     <startup>
       <splash-texture>Aircraft/Deuche/deuche-splash.png</splash-texture>
     </startup>

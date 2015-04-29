@@ -9,7 +9,7 @@
  <sim>
 		<description>BMW-S-1000-RR</description>
 		<author>LAKE OF CONSTANCE HANGAR :: M.Kraus</author>
-		<aircraft-version>0.1.1</aircraft-version>
+		<aircraft-version>0.1.2</aircraft-version>
 		<status>alpha</status>
 		<flight-model>yasim</flight-model>
 		<aero>BMW-S-1000-RR-yasim</aero>

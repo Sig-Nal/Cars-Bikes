@@ -9,7 +9,7 @@
  <sim>
 		<description>Yamaha-YZF-R1</description>
 		<author>LAKE OF CONSTANCE HANGAR :: M.Kraus</author>
-		<aircraft-version>0.0.1</aircraft-version>
+		<aircraft-version>0.0.2</aircraft-version>
 		<status>alpha</status>
 		<flight-model>yasim</flight-model>
 		<aero>Yamaha-YZF-R1-yasim</aero>
@@ -281,6 +281,7 @@ and have fun!</text>
 	<aircraft-data>
 		<path>/Yamaha-YZF/TT/fastest-lap</path>
 		<path>/Yamaha-YZF/TT/sector[0]/fastest-time</path>
+
 		<path>/Yamaha-YZF/TT/sector[1]/fastest-time</path>
 		<path>/Yamaha-YZF/TT/sector[2]/fastest-time</path>
 		<path>/Yamaha-YZF/TT/sector[3]/fastest-time</path>
@@ -534,6 +535,7 @@ and have fun!</text>
 		<lap n="4">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
+
 		<lap n="5">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
