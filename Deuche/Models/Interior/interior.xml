@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <path>interior.ac</path>
+
+  <animation>
+    <!-- Objets opaques -->
+    <object-name>intcorps</object-name>
+    <object-name>intailes</object-name>
+    <object-name>intporteAG</object-name>
+    <object-name>intporteAD</object-name>
+    <object-name>intporteBG</object-name>
+    <object-name>intporteBD</object-name>
+    <object-name>intmoteur</object-name>
+    <object-name>intsol</object-name>
+    <object-name>siegeavant</object-name>
+    <object-name>siegearriere</object-name>
+
+    <!-- Objets transparents -->
+    <object-name>intvitres</object-name>
+    <object-name>intvitreAG1</object-name>
+    <object-name>intvitreAG2</object-name>
+    <object-name>intvitreBG</object-name>
+    <object-name>intvitreAD1</object-name>
+    <object-name>intvitreAD2</object-name>
+    <object-name>intvitreBD</object-name>
+  </animation>
+
+  <animation>
+    <type>shader</type>
+    <shader>chrome</shader>
+    <texture>Aircraft/Generic/Effects/glass_shader.png</texture>
+    <object-name>intvitres</object-name>
+    <object-name>intvitreAG1</object-name>
+    <object-name>intvitreAG2</object-name>
+    <object-name>intvitreBG</object-name>
+    <object-name>intvitreAD1</object-name>
+    <object-name>intvitreAD2</object-name>
+    <object-name>intvitreBD</object-name>
+  </animation>
+
+  <animation>
+    <type>noshadow</type>
+    <object-name>intvitres</object-name>
+    <object-name>intvitreAG1</object-name>
+    <object-name>intvitreAG2</object-name>
+    <object-name>intvitreBG</object-name>
+    <object-name>intvitreAD1</object-name>
+    <object-name>intvitreAD2</object-name>
+    <object-name>intvitreBD</object-name>
+  </animation>
+
+  <!-- Pilote -->
+  <model>
+    <path>Aircraft/Deuche/Models/Pilot/pilot.xml</path>
+    <offsets>
+      <x-m> -0.290 </x-m>
+      <y-m> -0.242 </y-m>
+      <z-m> -0.047 </z-m>
+      <roll-deg>    0 </roll-deg>
+      <pitch-deg>   0 </pitch-deg>
+      <heading-deg> 0 </heading-deg>
+    </offsets>
+  </model>
+
+  <!-- Planche de bord -->
+  <model>
+    <path>Aircraft/Deuche/Models/Interior/Panel/panel.xml</path>
+    <offsets>
+      <x-m> -0.586 </x-m>
+      <y-m>  0.000 </y-m>
+      <z-m>  0.158 </z-m>
+    </offsets>
+  </model>
+
+  <animation>
+    <name>IntPorteAvantGauche</name>
+    <object-name>intporteAG</object-name>
+    <object-name>intvitreAG1</object-name>
+    <object-name>intvitreAG2</object-name>
+  </animation>
+
+  <animation>
+    <name>IntPorteAvantDroite</name>
+    <object-name>intporteAD</object-name>
+    <object-name>intvitreAD1</object-name>
+    <object-name>intvitreAD2</object-name>
+  </animation>
+
+  <animation>
+    <name>IntPorteArriereGauche</name>
+    <object-name>intporteBG</object-name>
+    <object-name>intvitreBG</object-name>
+  </animation>
+
+  <animation>
+    <name>IntPorteArriereDroite</name>
+    <object-name>intporteBD</object-name>
+    <object-name>intvitreBD</object-name>
+  </animation>
+
+  <!-- Porte avant gauche -->
+  <animation>
+    <type>pick</type>
+    <object-name>IntPorteAvantGauche</object-name>
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>  
+      <binding>
+        <command>nasal</command>
+        <script>doors.doorsystem.Lcrewexport();</script>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>IntPorteAvantGauche</object-name>
+    <property>/instrumentation/doors/Lcrew/position-norm</property>
+    <factor> -80 </factor>
+    <axis>
+      <x1-m> -0.619 </x1-m>
+      <y1-m> -0.617 </y1-m>
+      <z1-m> -0.370 </z1-m>
+      <x2-m> -0.619 </x2-m>
+      <y2-m> -0.585 </y2-m>
+      <z2-m>  0.130 </z2-m>
+    </axis>
+  </animation>
+
+  <!-- Porte avant droite -->
+  <animation>
+    <type>pick</type>
+    <object-name>IntPorteAvantDroite</object-name>
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>  
+      <binding>
+        <command>nasal</command>
+        <script>doors.doorsystem.Rcrewexport();</script>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>IntPorteAvantDroite</object-name>
+    <property>/instrumentation/doors/Rcrew/position-norm</property>
+    <factor> 80 </factor>
+    <axis>
+      <x1-m> -0.619 </x1-m>
+      <y1-m>  0.617 </y1-m>
+      <z1-m> -0.370 </z1-m>
+      <x2-m> -0.619 </x2-m>
+      <y2-m>  0.585 </y2-m>
+      <z2-m>  0.130 </z2-m>
+    </axis>
+  </animation>
+
+  <!-- Porte arriere gauche -->
+  <animation>
+    <type>pick</type>
+    <object-name>IntPorteArriereGauche</object-name>
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>  
+      <binding>
+        <command>nasal</command>
+        <script>doors.doorsystem.Lpassengerexport();</script>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>IntPorteArriereGauche</object-name>
+    <property>/instrumentation/doors/Lpassenger/position-norm</property>
+    <factor> -80 </factor>
+    <axis>
+      <x1-m>  0.202 </x1-m>
+      <y1-m> -0.658 </y1-m>
+      <z1-m> -0.345 </z1-m>
+      <x2-m>  0.190 </x2-m>
+      <y2-m> -0.557 </y2-m>
+      <z2-m>  0.660 </z2-m>
+    </axis>
+  </animation>
+
+  <!-- Porte arriere droite -->
+  <animation>
+    <type>pick</type>
+    <object-name>IntPorteArriereDroite</object-name>
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>  
+      <binding>
+        <command>nasal</command>
+        <script>doors.doorsystem.Rpassengerexport();</script>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>IntPorteArriereDroite</object-name>
+    <property>/instrumentation/doors/Rpassenger/position-norm</property>
+    <factor> 80 </factor>
+    <axis>
+      <x1-m>  0.202 </x1-m>
+      <y1-m>  0.658 </y1-m>
+      <z1-m> -0.345 </z1-m>
+      <x2-m>  0.190 </x2-m>
+      <y2-m>  0.557 </y2-m>
+      <z2-m>  0.660 </z2-m>
+    </axis>
+  </animation>
+
+</PropertyList>
+

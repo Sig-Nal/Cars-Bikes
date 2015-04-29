@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <sim include="Nasal/views.xml">
+
+    <description>2 chevaux Citroen</description>
+    <author>BARANGER Emmanuel (3D), Detlef Faber (FDM))</author>
+    <status>alpha</status>
+    <version>2.0</version>
+    <startup>
+      <splash-texture>Aircraft/Deuche/deuche-splash.png</splash-texture>
+    </startup>
+
+    <model>
+      <path>Aircraft/Deuche/Models/deuche.xml</path>
+      <livery>
+        <file type="string">default</file>
+      </livery>
+      <crew>
+         <pilot>
+           <visible type="int">1</visible>
+         </pilot>
+      </crew>
+    </model> 
+
+    <sound>
+      <path>Aircraft/Deuche/Sounds/deuche-sound.xml</path>
+    </sound>
+
+    <walker>
+      <outside type="bool"> false </outside>
+      <walking type="bool"> false </walking>
+      <speed type="double"> 0.000006  </speed>
+      <latitude-deg type="double">  0 </latitude-deg>
+      <longitude-deg type="double"> 0 </longitude-deg>
+      <altitude-ft type="double">   0 </altitude-ft>
+      <heading-deg type="double">   0 </heading-deg>
+      <pitch-deg type="double">     0 </pitch-deg>
+      <roll-deg type="double">      0 </roll-deg>
+    </walker>
+
+    <multiplay>
+      <chat_display>1</chat_display>
+      <generic>
+        <int type="int" n="0"> 0 </int>
+        <int type="int" n="1"> 0 </int>
+        <int type="int" n="2"> 0 </int>
+        <int type="int" n="3"> 0 </int>
+        <int type="int" n="4"> 0 </int>
+        <int n="5" alias="/controls/switches/landing-light"/>
+
+        <float n="0" alias="/instrumentation/doors/Lcrew/position-norm"/>
+        <float n="1" alias="/instrumentation/doors/Lpassenger/position-norm"/>
+        <float n="2" alias="/instrumentation/doors/Rcrew/position-norm"/>
+        <float n="3" alias="/instrumentation/doors/Rpassenger/position-norm"/>
+        <float n="4" alias="/instrumentation/doors/roof/position-norm"/>
+ 	    <float n="5" alias="/controls/gear/brake-right"/> <!-- for mp -->
+      </generic>
+    </multiplay>
+
+    <help>
+      <key>
+        <name>Mouse click</name>
+        <desc>Click on the doors and roof to open / close.</desc>
+      </key>
+
+      <key>
+        <name>}</name>
+        <desc>Contact</desc>
+      </key>
+
+      <key>
+        <name>s</name>
+        <desc>Start</desc>
+      </key>
+
+    </help>
+
+    <menubar include="Dialogs/deuche-menu.xml"/>
+
+  </sim>
+
+  <input>
+    <keyboard include="Nasal/deuche-keyboard.xml"/>
+  </input>
+ 
+  <controls>
+    <gear>
+      <screen type="bool">false</screen>
+      <roof type="bool">false</roof>
+    </gear>
+    <switches>
+      <landing-light type="bool"> true </landing-light>
+    </switches>
+  </controls>
+
+  <nasal>
+    <doors>
+      <file>Aircraft/Deuche/Nasal/doors.nas</file>
+    </doors>
+    <deuche>
+      <file>Aircraft/Deuche/Nasal/liveries.nas</file>
+      <file>Aircraft/Deuche/Nasal/immat.nas</file>
+    </deuche>
+    <walk>
+      <file>Aircraft/Deuche/Nasal/walk.nas</file>
+      <script>main_loop();</script>
+    </walk>
+  </nasal>
+
+</PropertyList>
+

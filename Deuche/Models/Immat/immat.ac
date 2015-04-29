@@ -1,0 +1,291 @@
+AC3Db
+MATERIAL "DefaultWhite" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.5 0.5 0.5  shi 64  trans 0
+MATERIAL "DefaultWhite" rgb 1 1 1 amb 1 1 1 emis 0 0 0 spec 0.5 0.5 0.5 shi 64 trans 0
+OBJECT world
+kids 14
+OBJECT poly
+name "ImatArriere1"
+data 12
+ImatArriere1
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+1.763592 -0.125083 0.159684
+1.815488 -0.19993 0.159684
+1.763592 -0.125083 0.239525
+1.815488 -0.19993 0.239525
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+0 0.0224609375 0.875
+2 -0.001953125 0.875
+3 -0.001953125 0.1875
+1 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatArriere2"
+data 12
+ImatArriere2
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+1.763592 -0.125083 0.159684
+1.763592 -0.125083 0.079842
+1.815488 -0.19993 0.159684
+1.815488 -0.19993 0.079842
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+1 0.0224609375 0.875
+0 -0.001953125 0.875
+2 -0.001953125 0.1875
+3 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatArriere3"
+data 12
+ImatArriere3
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+1.763592 -0.125083 0.079842
+1.763592 -0.125083 0
+1.815488 -0.19993 0.079842
+1.815488 -0.19993 0
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+1 0.0224609375 0.875
+0 -0.001953125 0.875
+2 -0.001953125 0.1875
+3 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatArriere4"
+data 12
+ImatArriere4
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+1.763592 -0.125083 0
+1.763592 -0.125083 -0.079842
+1.815488 -0.19993 0
+1.815488 -0.19993 -0.079842
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+1 0.0224609375 0.875
+0 -0.001953125 0.875
+2 -0.001953125 0.1875
+3 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatArriere5"
+data 12
+ImatArriere5
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+1.763592 -0.125083 -0.079842
+1.763592 -0.125083 -0.159684
+1.815488 -0.19993 -0.079842
+1.815488 -0.19993 -0.159684
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+1 0.0224609375 0.875
+0 -0.001953125 0.875
+2 -0.001953125 0.1875
+3 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatArriere6"
+data 12
+ImatArriere6
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+1.763592 -0.125083 -0.159684
+1.815488 -0.19993 -0.159684
+1.815488 -0.19993 -0.239525
+1.763592 -0.125083 -0.239525
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+3 0.0224609375 0.875
+0 -0.001953125 0.875
+1 -0.001953125 0.1875
+2 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatAvant1"
+data 10
+ImatAvant1
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+-1.828937 -0.333579 -0.117195
+-1.832299 -0.402866 -0.117195
+-1.819244 -0.333579 -0.175792
+-1.819244 -0.402866 -0.175792
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+0 0.0224609375 0.875
+2 -0.001953125 0.875
+3 -0.001953125 0.1875
+1 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatAvant2"
+data 10
+ImatAvant2
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 6
+-1.834077 -0.333579 -0.087896
+-1.836401 -0.402866 -0.087896
+-1.828937 -0.333579 -0.117195
+-1.837187 -0.333579 -0.058597
+-1.832299 -0.402866 -0.117195
+-1.838142 -0.402866 -0.058597
+numsurf 2
+SURF 0x30
+mat 1
+refs 4
+3 0.0224609375 0.875
+0 0.00830078125 0.875
+1 0.00830078125 0.1875
+5 0.0224609375 0.1875
+SURF 0x30
+mat 1
+refs 4
+0 0.00830078125 0.875
+2 -0.001953125 0.875
+4 -0.001953125 0.1875
+1 0.00830078125 0.1875
+kids 0
+OBJECT poly
+name "ImatAvant3"
+data 10
+ImatAvant3
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+-1.837187 -0.333579 -0.058597
+-1.837873 -0.333579 0
+-1.838142 -0.402866 -0.058597
+-1.837873 -0.402866 0
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+1 0.0224609375 0.875
+0 -0.001953125 0.875
+2 -0.001953125 0.1875
+3 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatAvant4"
+data 10
+ImatAvant4
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+-1.837873 -0.333579 0
+-1.837187 -0.333579 0.058597
+-1.837873 -0.402866 0
+-1.838142 -0.402866 0.058597
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+1 0.0224609375 0.875
+0 -0.001953125 0.875
+2 -0.001953125 0.1875
+3 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "ImatAvant5"
+data 10
+ImatAvant5
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 6
+-1.834077 -0.333579 0.087896
+-1.836401 -0.402866 0.087896
+-1.837187 -0.333579 0.058597
+-1.828937 -0.333579 0.117195
+-1.838142 -0.402866 0.058597
+-1.832299 -0.402866 0.117195
+numsurf 2
+SURF 0x30
+mat 1
+refs 4
+3 0.0224609375 0.875
+0 0.01025390625 0.875
+1 0.01025390625 0.1875
+5 0.0224609375 0.1875
+SURF 0x30
+mat 1
+refs 4
+0 0.01025390625 0.875
+2 -0.001953125 0.875
+4 -0.001953125 0.1875
+1 0.01025390625 0.1875
+kids 0
+OBJECT poly
+name "ImatAvant6"
+data 10
+ImatAvant6
+texture "immat-white.png"
+texrep 1 1
+crease 30.000000
+numvert 4
+-1.828937 -0.333579 0.117195
+-1.832299 -0.402866 0.117195
+-1.819244 -0.402866 0.175792
+-1.819244 -0.333579 0.175792
+numsurf 1
+SURF 0x30
+mat 1
+refs 4
+3 0.0224609375 0.875
+0 -0.001953125 0.875
+1 -0.001953125 0.1875
+2 0.0224609375 0.1875
+kids 0
+OBJECT poly
+name "Plane.007"
+data 9
+Plane.002
+crease 30.000000
+numvert 0
+numsurf 0
+kids 0
+OBJECT poly
+name "Plane.008"
+data 9
+Plane.005
+crease 30.000000
+numvert 0
+numsurf 0
+kids 0

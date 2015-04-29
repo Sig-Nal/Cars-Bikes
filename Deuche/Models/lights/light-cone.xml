@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <path>light-cone.ac</path>
+
+  <effect>
+    <inherits-from>Effects/light-cone</inherits-from>
+    <object-name>Cone</object-name>
+    <object-name>Cone-texture</object-name>
+  </effect>
+  
+  <animation>
+    <type>select</type>
+    <object-name>Cone-texture</object-name>
+    <object-name>Cone</object-name>
+    <condition>
+      <equals>
+   <property>sim/multiplay/generic/int[5]</property>
+        <value> true </value>
+      </equals>
+    </condition>
+  </animation>
+
+</PropertyList>

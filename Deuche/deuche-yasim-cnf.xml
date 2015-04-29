@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+************************************************************************
+Deux Chevaux Citroen
+Dec. 2008 BARANGER Emmanuel
+************************************************************************
+-->
+
+<PropertyList include="deuche-base.xml">
+
+  <sim>
+
+    <description>2 Cv Citroen (YASim)</description>
+    <flight-model>yasim</flight-model>
+    <aero>deuche-yasim</aero>
+
+  </sim>
+    
+</PropertyList>

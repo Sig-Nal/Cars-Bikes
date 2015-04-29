@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- FDM for "2 cv Citroen" based on Jeep FDM By Detlef FABER*
+
+     source : http://en.wikipedia.org/wiki/Citro%C3%ABn_2CV
+
+     length : 3.83 metres (150.8 in)
+     width  : 1.48 metres ( 58.3 in)
+     height : 1.60 metres ( 63.0 in)
+     weight :  560 kg     ( 1200 lb)
+ -->
+
+<airplane mass="1200">
+
+  <approach speed="50" aoa="6" fuel="0.8">
+    <control-setting axis="/controls/engines/engine[0]/throttle" value="0.25"/>
+  </approach>
+
+  <cruise speed="50" alt="0" fuel="0.8">
+    <control-setting axis="/controls/engines/engine[0]/throttle" value="1.0"/>
+  </cruise>
+
+  <cockpit x="0.045" y="0.173" z="0.489"/>
+
+  <fuselage ax="1.918"  ay="0" az="-0.008" bx="-1.905" by="0" bz="-0.008" width="1" taper="1" cx="2.5" cz="2.5"/>
+
+  <wing x="0" y="0" z="0"
+        chord="1"
+        length="0.7"
+        taper="1"
+        camber="0">
+  </wing>
+
+  <mstab x="0" y="0" z="0"
+         chord="1.2"
+         length="1.8">
+  </mstab>
+
+  <!-- Engines   source            : http://fr.wikipedia.org/wiki/Moteur_de_Citro%C3%ABn_2CV
+
+                 type              : 435 cc H2 air cooled
+                 power cruise      : 33 hp
+                 weight            : 66 kg (244 lbs)
+  -->
+  <propeller x="1.278" y="0" z="-0.088"
+	     mass="124" 
+	     moment="0.7"  
+             radius="0.95"
+	     cruise-speed="45" 
+	     cruise-rpm="5500"
+	     cruise-power="30"
+	     cruise-alt="0">
+             <actionpt x="1.230" y="0" z="-0.789"/>
+             <piston-engine eng-rpm="5760" 
+                            eng-power="33"/>
+             <control-input control="THROTTLE" axis="/controls/engines/engine[0]/throttle" src0="0.0" src1="1.0" dst0="0.0" dst1="1.0"/>
+             <control-input control="STARTER" axis="/controls/engines/engine[0]/starter" />
+             <control-input control="MAGNETOS" axis="/controls/engines/engine[0]/magnetos" />
+             <control-input control="MIXTURE" axis="/controls/engines/engine[0]/mixture" src0="0.0" src1="1.0" dst0="0.8" dst1="0.8"/>
+  </propeller>
+  
+<!-- ori_dfric 1.3-->
+
+  <gear x="1.230" y="0.613" z="-0.789" 
+        compression="0.15"
+        dfric="1.5"
+        spring="2"
+        damp="3.8">
+        <control-input axis="/controls/gear/brake-right" control="BRAKE"/>   <!--  ori= left-->
+        <control-input axis="/controls/flight/aileron" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-0.6" dst1="0.6"/>
+        <control-input axis="/controls/flight/ridder" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-0.6" dst1="0.6"/>
+        <control-input axis="/controls/gear/brake-parking" control="BRAKE"/>   <!--  rajout -->
+        <control-output control="STEER" prop="/surface-positions/aileron-pos-norm"/>
+  </gear>
+
+  <gear x="1.230" y="-0.613" z="-0.789"
+        compression="0.15"
+        dfric="1.5"
+        spring="2"
+        damp="3.8">
+        <control-input axis="/controls/gear/brake-left" control="BRAKE"/>
+        <control-input axis="/controls/flight/aileron" control="STEER" square="true" src0="-0.8" src1="0.8" dst0="-0.6" dst1="0.6"/>
+        <control-input axis="/controls/flight/rudder" control="STEER" square="true" src0="-0.8" src1="0.8" dst0="-0.6" dst1="0.6"/>
+        <control-input axis="/controls/gear/brake-parking" control="BRAKE"/>    <!--  rajout -->
+        <control-output control="STEER" prop="/surface-positions/aileron-pos-norm"/>
+  </gear>
+
+  <gear x="-1.173" y="0.613" z="-0.780"
+        compression="0.15"
+        dfric="0.95"
+        spring="2"
+        damp="3.8">
+        <!--control-input axis="/controls/gear/brake-parking" control="BRAKE"/>
+        <control-input axis="/controls/gear/brake-right" control="BRAKE"/-->      <!--  rajout -->
+  </gear>
+
+  <gear x="-1.173" y="-0.613" z="-0.780"
+        compression="0.15"
+        dfric="0.95"
+        spring="2"
+        damp="3.8">
+        <!--control-input axis="/controls/gear/brake-parking" control="BRAKE"/>
+        <control-input axis="/controls/gear/brake-left" control="BRAKE"/-->       <!--  rajout -->
+  </gear>
+
+  <tank x="-1.156" y="0" z="-0.179" capacity="61.73"/>
+
+  <ballast x="-2.1" y="0" z="-4.235" mass="500"/>
+
+</airplane>

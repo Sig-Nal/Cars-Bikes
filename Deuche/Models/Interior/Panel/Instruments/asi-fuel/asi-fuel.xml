@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <path>asi-fuel.ac</path>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>fond</object-name>
+    <object-name>vitre</object-name>
+  </effect>
+
+  <animation>
+    <object-name>fond</object-name>
+    <object-name>needle</object-name>
+    <object-name>needle1</object-name>
+    <object-name>vitre</object-name>
+  </animation>
+
+  <animation>
+    <type>noshadow</type>
+    <object-name>vitre</object-name>
+  </animation>
+
+  <animation>
+    <type>shader</type>
+    <texture>Aircraft/Generic/Effects/glass_shader.png</texture>
+    <texture>shader.png</texture>
+    <object-name>vitre</object-name>
+  </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>fond</object-name>
+    <object-name>needle</object-name>
+    <object-name>needle1</object-name>
+    <emission>
+      <red>   0.030 </red>
+      <green> 0.015 </green>
+      <blue>  0.005 </blue>
+      <factor-prop>systems/electrical/outputs/instrument-lights</factor-prop>
+    </emission>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>needle</object-name>
+    <property>instrumentation/airspeed-indicator/indicated-speed-kt</property>
+    <interpolation>
+      <entry><ind>  0.0 </ind><dep>   0 </dep></entry> <!--   0 km/h -->
+      <entry><ind> 10.8 </ind><dep>  25 </dep></entry> <!--  20 km/h -->
+      <entry><ind> 16.2 </ind><dep>  45 </dep></entry> <!--  30 km/h -->
+      <entry><ind> 21.6 </ind><dep>  70 </dep></entry> <!--  40 km/h -->
+      <entry><ind> 27.0 </ind><dep>  95 </dep></entry> <!--  50 km/h -->
+      <entry><ind> 32.4 </ind><dep> 120 </dep></entry> <!--  60 km/h -->
+      <entry><ind> 37.8 </ind><dep> 150 </dep></entry> <!--  70 km/h -->
+      <entry><ind> 43.2 </ind><dep> 177 </dep></entry> <!--  80 km/h -->
+      <entry><ind> 48.6 </ind><dep> 201 </dep></entry> <!--  90 km/h -->
+      <entry><ind> 54.0 </ind><dep> 230 </dep></entry> <!-- 100 km/h -->
+      <entry><ind> 59.4 </ind><dep> 259 </dep></entry> <!-- 110 km/h -->
+      <entry><ind> 64.8 </ind><dep> 279 </dep></entry> <!-- 120 km/h -->
+    </interpolation>
+    <axis>
+      <x> -1 </x>
+      <y>  0 </y>
+      <z>  0 </z>
+    </axis>
+    <center>
+      <x-m> 0.002 </x-m>
+      <y-m> 0.000 </y-m>
+      <z-m> 0.016 </z-m>
+    </center>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>needle1</object-name>
+    <property>consumables/fuel/tank[0]/level-lbs</property>
+    <interpolation>
+      <entry><ind>  0.00 </ind><dep>  0 </dep></entry> <!--   0 litres -->
+      <entry><ind> 30.86 </ind><dep> 35 </dep></entry> <!--  20 litres -->
+      <entry><ind> 61.73 </ind><dep> 70 </dep></entry> <!--  40 litres -->
+    </interpolation>
+    <center>
+      <x-m> -0.001 </x-m>
+      <y-m>  0.000 </y-m>
+      <z-m> -0.024 </z-m>
+    </center>
+    <axis>
+      <x> 1 </x>
+      <y> 0 </y>
+      <z> 0 </z>
+    </axis>
+  </animation>
+
+</PropertyList>

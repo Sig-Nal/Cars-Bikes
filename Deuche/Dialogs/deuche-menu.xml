@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <default>
+    <menu n="10">
+      <label>2 Chevaux Citroen</label>
+      <enabled type="bool">true</enabled>
+<!--  <item>
+        <label>tilt Windscreen forward</label>
+        <binding>
+          <command>property-toggle</command>
+          <property>/controls/gear/screen</property>
+        </binding>
+      </item>
+      <item>
+        <label>put Softroof on</label>
+        <binding>
+          <command>property-toggle</command>
+          <property>/controls/gear/roof</property>
+        </binding>
+      </item> -->
+      <item>
+        <label>Select Livery</label>
+        <binding>
+          <command>nasal</command>
+          <script>aircraft.livery.dialog.toggle()</script>
+        </binding>
+      </item>
+      <item>
+        <label>Immatriculation</label>
+        <binding>
+          <command>nasal</command>
+          <script>deuche.immat_dialog.toggle()</script>
+        </binding>
+      </item>
+    </menu>
+  </default>
+
+</PropertyList>
+

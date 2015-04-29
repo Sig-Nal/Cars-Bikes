@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <path>panel.ac</path>
+  <!--effect>
+    <inherits-from>Effects/light-cone</inherits-from>
+    <object-name>panel</object-name>
+    <object-name>panel3</object-name>
+    <object-name>panel4</object-name>
+    <object-name>panel5</object-name>
+    <object-name>molette</object-name>
+  </effect-->
+  <animation>
+    <!-- Objets opaques -->
+    <object-name>panel</object-name>
+    <object-name>panel3</object-name>
+    <object-name>panel4</object-name>
+    <object-name>panel5</object-name>
+    <object-name>molette</object-name>
+
+    <!-- Objets transparents -->
+  </animation>
+
+  <!-- ASI - Fuel -->
+  <model>
+    <path>Aircraft/Deuche/Models/Interior/Panel/Instruments/asi-fuel/asi-fuel.xml</path>
+    <offsets>
+      <x-m>  0.017 </x-m>
+      <y-m> -0.295 </y-m>
+      <z-m> -0.016 </z-m>
+      <roll-deg>    0 </roll-deg>
+      <pitch-deg> -25 </pitch-deg>
+      <heading-deg> 0 </heading-deg>
+    </offsets>
+  </model>
+
+  <!-- Switch light -->
+  <model>
+    <path>Aircraft/Deuche/Models/Interior/Panel/Instruments/divers/landing-lights.xml</path>
+    <offsets>
+      <x-m>  0.016 </x-m>
+      <y-m> -0.352 </y-m>
+      <z-m>  0.023 </z-m>
+      <roll-deg>    180 </roll-deg>
+      <pitch-deg>   0 </pitch-deg>
+      <heading-deg> 0 </heading-deg>
+    </offsets>
+  </model>
+
+</PropertyList>
+
