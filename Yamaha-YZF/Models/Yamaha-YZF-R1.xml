@@ -617,28 +617,4 @@
    </axis>
   </animation>
 
-
-  <!--model>
-	<name>Stop</name>
-    <path>Aircraft/Yamaha-YZF/Models/Lights/RedLight.xml</path-->  <!--  or  rednav.xml  -->
-    <!--offsets>
-      <x-m> 1 </x-m>
-      <y-m> 0.0 </y-m>
-      <z-m> 0.88 </z-m>
-      <heading-deg>90</heading-deg-->
-      <!--pitch-deg> -38 </pitch-deg-->
-    <!--/offsets>
-  </model-->
-
-  <!--model>
-	<name>Beam</name>
-    <path>Aircraft/Yamaha-YZF/Models/Lights/light-coneC.xml</path>
-    <offsets>
-    <x-m>-16.952</x-m>
-    <y-m>  0.000</y-m> 
-    <z-m> -2.950</z-m--> 
-      <!--pitch-deg> -38 </pitch-deg-->
-    <!--/offsets>
-  </model-->
-
 </PropertyList>

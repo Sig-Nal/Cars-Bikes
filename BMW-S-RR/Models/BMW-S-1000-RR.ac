@@ -26247,7 +26247,6 @@ kids 0
 OBJECT poly
 name "ducholder"
 loc 0.8571579 0.3170170 0.1427825
-texture "BMW_S_1000_RR.png"
 texrep 1 1
 numvert 260
 0.4020472 -0.1691145 0.0091799
