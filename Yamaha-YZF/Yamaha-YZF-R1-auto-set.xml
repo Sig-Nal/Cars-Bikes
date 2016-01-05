@@ -102,6 +102,10 @@
 			  <desc>toggle workstand</desc>
 			</key>
 			<key>
+			  <name>q</name>
+			  <desc>Driver-looks-back</desc>
+			</key>
+			<key>
 			  <name>1</name>
 			  <desc>Quick glance over the shoulder</desc>
 			</key>
@@ -230,15 +234,12 @@ and have fun!</text>
  			<float n="6" alias="/Yamaha-YZF/this-lap-time"/> <!-- for mp -->
  			<float n="7" alias="/Yamaha-YZF/this-race-time"/> <!-- for mp -->
  			<float n="8" alias="/Yamaha-YZF/last-lap-time"/> <!-- for mp -->
- 			<float n="9" alias="/controls/gear/brake-right"/> <!-- for mp -->
 
  			<int n="0" alias="/controls/Yamaha-YZF/newbie"/> <!-- animation red security pullover -->
  			<int n="1" alias="/Yamaha-YZF/race-lap"/> 	 <!-- mp result views -->
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
  			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
  			<int n="4" alias="/controls/Yamaha-YZF/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
-            <int n="5" alias="/controls/lighting/landing-lights"/>
- 			<int n="6" alias="/controls/gear/brake-right"/> <!-- for mp -->
 		 </generic>
 	</multiplay>
 
@@ -329,6 +330,7 @@ and have fun!</text>
    <clutch type="int">0</clutch>
    <killed type="float">0</killed>
    <brake-engine type="double">0.0</brake-engine>
+   <rpm_regulation type="int">0</rpm_regulation>
   </engine>
  </engines>
  
@@ -528,7 +530,6 @@ and have fun!</text>
 		<lap n="5">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
-
 		<lap n="6">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
@@ -1030,7 +1031,22 @@ and have fun!</text>
 		  <value>1</value>
 	     </binding>
 		</key>
-		
+		<key n="113"> 
+         <name>q</name>
+         <desc>driver-looks-back</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/controls/Yamaha-YZF/driver-looks-back</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/controls/Yamaha-YZF/driver-looks-back</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
+		</key>		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	
 		<key n="263">
 			<name>F7</name>

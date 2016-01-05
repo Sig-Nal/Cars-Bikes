@@ -95,11 +95,15 @@
   <help>
 			<key>
 			  <name>s</name>
-			  <desc>engine starter</desc>
+			  <desc>Engine starter</desc>
 			</key>
 			<key>
 			  <name>g/G and b/B</name>
 			  <desc>toggle workstand</desc>
+			</key>
+			<key>
+			  <name>q</name>
+			  <desc>Driver-looks-back</desc>
 			</key>
 			<key>
 			  <name>1</name>
@@ -172,7 +176,7 @@ and have fun!</text>
 					<command>property-toggle</command>
 					<property>/Suzuki-GSX-R/switch-last-fastest</property>
 				</binding>
-			</item>	
+			</item>			
 			<item>
 				<label>--- Painting ---</label>
 				<enabled>false</enabled>
@@ -195,14 +199,14 @@ and have fun!</text>
 					<command>property-toggle</command>
 					<property>/controls/Suzuki-GSX-R/old-mens-mode</property>
 				</binding>
-			</item>			
+			</item> 			
 			<item>
 				<label>Toggle throttle input axis</label>
 				<binding>
 					<command>property-toggle</command>
 					<property>/controls/flight/select-throttle-input</property>
 				</binding>
-			</item>
+			</item> 
 			<item>
 				<label>--- Roadraces ---</label>
 				<enabled>false</enabled>
@@ -220,23 +224,24 @@ and have fun!</text>
 	</menubar>
 	
 	<multiplay>
-	 <generic>
-		<float n="0" alias="/gear/gear[0]/rollspeed-ms"/> <!-- wheel rotation -->
-		<float n="1" alias="/gear/gear[1]/rollspeed-ms"/> <!-- wheel rotation -->
-		<float n="2" alias="/gear/gear[0]/compression-norm"/> <!-- front wheel supension -->
-		<float n="3" alias="/controls/Suzuki-GSX-R/driver-up"/> <!-- animation for pilot in workstand -->
-		<float n="4" alias="/engines/engine/killed"/> <!-- animation broken engine in workstand -->
-		<float n="5" alias="/gear/gear[1]/compression-norm"/>
-		<float n="6" alias="/Suzuki-GSX-R/this-lap-time"/> <!-- for mp -->
-		<float n="7" alias="/Suzuki-GSX-R/this-race-time"/> <!-- for mp -->
-		<float n="8" alias="/Suzuki-GSX-R/last-lap-time"/> <!-- for mp --> 
+		 <generic>
+			<float n="0" alias="/gear/gear[0]/rollspeed-ms"/> <!-- wheel rotation -->
+			<float n="1" alias="/gear/gear[1]/rollspeed-ms"/> <!-- wheel rotation -->
+			<float n="2" alias="/gear/gear[0]/compression-norm"/> <!-- front wheel supension -->
+			<float n="3" alias="/controls/Suzuki-GSX-R/driver-up"/> <!-- animation for pilot in workstand -->
+			<float n="4" alias="/engines/engine/killed"/> <!-- animation broken engine in workstand -->
+			<float n="5" alias="/gear/gear[1]/compression-norm"/>
+			<float n="6" alias="/Suzuki-GSX-R/this-lap-time"/> <!-- for mp -->
+			<float n="7" alias="/Suzuki-GSX-R/this-race-time"/> <!-- for mp -->
+			<float n="8" alias="/Suzuki-GSX-R/last-lap-time"/> <!-- for mp --> 
 
-		<int n="0" alias="/controls/Suzuki-GSX-R/newbie"/> <!-- animation red security pullover -->
-		<int n="1" alias="/Suzuki-GSX-R/race-lap"/> 	 <!-- mp result views -->
+			<int n="0" alias="/controls/Suzuki-GSX-R/newbie"/> <!-- animation red security pullover -->
+			<int n="1" alias="/Suzuki-GSX-R/race-lap"/> 	 <!-- mp result views -->
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
-		<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
-		<int n="4" alias="/controls/Suzuki-GSX-R/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
-	 </generic>
+			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
+			<int n="4" alias="/controls/Suzuki-GSX-R/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="5" alias="/controls/Suzuki-GSX-R/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
+		 </generic>
 	</multiplay>
 
     <weight n="0">
@@ -245,6 +250,23 @@ and have fun!</text>
       <max-lb>230</max-lb>
       <min-lb>140</min-lb>
     </weight>
+
+    <weight n="1">
+      <name>Backwheel</name>
+      <weight-lb>0</weight-lb>
+      <max-lb>300</max-lb>
+      <min-lb>0</min-lb>
+    </weight>
+			
+	<flaps>
+	 <setting>0.6</setting>
+	 <setting>0.5</setting> 
+	 <setting>0.4</setting> 
+	 <setting>0.3</setting> 
+	 <setting>0.2</setting> 
+	 <setting>0.1</setting> 
+	 <setting>0.0</setting> 
+	</flaps>
 		
 	<aircraft-data>
 		<path>/Suzuki-GSX-R/TT/fastest-lap</path>
@@ -288,8 +310,9 @@ and have fun!</text>
 		<path>/Suzuki-GSX-R/CT/sector[2]/fastest-time</path>
 		<path>/controls/flight/select-throttle-input</path>
 		<path>/controls/Suzuki-GSX-R/old-mens-mode</path>
+		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
-	
+
  </sim>
  
  <!--ENGINES-->
@@ -305,77 +328,77 @@ and have fun!</text>
    <brake-engine type="double">0.0</brake-engine>
   </engine>
  </engines>
- 
- <Suzuki-GSX-R>
- 	<show-race-times type="bool">0</show-race-times>
- 	<show-mp-times type="bool">0</show-mp-times>
- 	<switch-last-fastest type="bool">0</switch-last-fastest>
- 	<race-lap type="int">0</race-lap>
- 	<this-sector type="int">0</this-sector>
- 	<!-- only for mp properties -->
- 	<this-sector-time type="float">0.0</this-sector-time>
- 	<this-lap-time type="float">0.0</this-lap-time>
- 	<last-lap-time type="float">0.0</last-lap-time>
- 	<this-race-time type="float">0.0</this-race-time>
- 	<!--- end only for mp -->		
- 	<TT>
- 		<race-laps type="int">6</race-laps>
- 		<fastest-lap type="float">0.0</fastest-lap>
- 		<sector n="0">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>	
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="1">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="2">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="3">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="4">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="5">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<lap n="0">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="1">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="2">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="3">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="4">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="5">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="6">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="7">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 	</TT> 
+
+<Suzuki-GSX-R>
+	<show-race-times type="bool">0</show-race-times>
+	<show-mp-times type="bool">0</show-mp-times>
+	<switch-last-fastest type="bool">0</switch-last-fastest>
+	<race-lap type="int">0</race-lap>
+	<this-sector type="int">0</this-sector>
+	<!-- only for mp properties -->
+	<this-sector-time type="float">0.0</this-sector-time>
+	<this-lap-time type="float">0.0</this-lap-time>
+	<last-lap-time type="float">0.0</last-lap-time>
+	<this-race-time type="float">0.0</this-race-time>
+	<!--- end only for mp -->		
+	<TT>
+		<race-laps type="int">6</race-laps>
+		<fastest-lap type="float">0.0</fastest-lap>
+		<sector n="0">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>	
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="1">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="2">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="3">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="4">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="5">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<lap n="0">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="1">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="2">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="3">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="4">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="5">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="6">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="7">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+	</TT> 
 	<S100>
 		<race-laps type="int">9</race-laps>
 		<fastest-lap type="float">0.0</fastest-lap>
@@ -428,259 +451,259 @@ and have fun!</text>
 			<actual-time type="float">0.0</actual-time>
 		</lap>
 	</S100>    
- 	<NW200>
- 		<race-laps type="int">6</race-laps>
- 		<fastest-lap type="float">0.0</fastest-lap>
- 		<sector n="0">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>	
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="1">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="2">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<lap n="0">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="1">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="2">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="3">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="4">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="5">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="6">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="7">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 	</NW200>  
- 	<UGP>
- 		<race-laps type="int">6</race-laps>
- 		<fastest-lap type="float">0.0</fastest-lap>
- 		<sector n="0">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>	
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="1">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<lap n="0">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="1">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="2">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="3">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="4">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="5">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="6">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="7">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 	</UGP>
- 	<MGP>
- 		<race-laps type="int">12</race-laps>
- 		<fastest-lap type="float">0.0</fastest-lap>
- 		<sector n="0">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>	
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="1">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="2">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<lap n="0">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="1">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="2">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="3">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="4">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="5">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="6">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="7">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="8">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="9">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="10">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="11">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="12">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="13">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 	</MGP> 
- 	<KAL>
- 		<race-laps type="int">10</race-laps>
- 		<fastest-lap type="float">0.0</fastest-lap>
- 		<sector n="0">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>	
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="1">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="2">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<lap n="0">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="1">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="2">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="3">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="4">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="5">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="6">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="7">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="8">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="9">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="10">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="11">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 	</KAL>
- 	<HD>
- 		<race-laps type="int">12</race-laps>
- 		<fastest-lap type="float">0.0</fastest-lap>
- 		<sector n="0">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>	
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="1">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<lap n="0">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="1">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="2">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="3">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="4">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="5">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="6">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="7">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="8">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="9">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="10">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="11">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="12">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="13">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 	</HD>
+	<NW200>
+		<race-laps type="int">6</race-laps>
+		<fastest-lap type="float">0.0</fastest-lap>
+		<sector n="0">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>	
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="1">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="2">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<lap n="0">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="1">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="2">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="3">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="4">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="5">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="6">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="7">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+	</NW200>  
+	<UGP>
+		<race-laps type="int">6</race-laps>
+		<fastest-lap type="float">0.0</fastest-lap>
+		<sector n="0">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>	
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="1">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<lap n="0">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="1">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="2">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="3">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="4">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="5">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="6">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="7">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+	</UGP>
+	<MGP>
+		<race-laps type="int">12</race-laps>
+		<fastest-lap type="float">0.0</fastest-lap>
+		<sector n="0">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>	
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="1">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="2">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<lap n="0">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="1">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="2">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="3">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="4">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="5">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="6">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="7">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="8">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="9">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="10">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="11">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="12">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="13">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+	</MGP> 
+	<KAL>
+		<race-laps type="int">10</race-laps>
+		<fastest-lap type="float">0.0</fastest-lap>
+		<sector n="0">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>	
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="1">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="2">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<lap n="0">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="1">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="2">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="3">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="4">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="5">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="6">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="7">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="8">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="9">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="10">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="11">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+	</KAL>
+	<HD>
+		<race-laps type="int">12</race-laps>
+		<fastest-lap type="float">0.0</fastest-lap>
+		<sector n="0">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>	
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="1">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<lap n="0">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="1">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="2">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="3">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="4">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="5">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="6">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="7">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="8">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="9">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="10">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="11">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="12">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="13">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+	</HD>
 	<MF>
 		<race-laps type="int">12</race-laps>
 		<fastest-lap type="float">0.0</fastest-lap>
@@ -737,71 +760,71 @@ and have fun!</text>
 			<actual-time type="float">0.0</actual-time>
 		</lap>
 	</MF>
- 	<CC>
- 		<race-laps type="int">8</race-laps>
- 		<fastest-lap type="float">0.0</fastest-lap>
- 		<sector n="0">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>	
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<sector n="1">
- 			<start-time type="float">0.0</start-time>
- 			<last-time type="float">0.0</last-time>		
- 			<fastest-time type="float">0.0</fastest-time>
- 		</sector>
- 		<lap n="0">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="1">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="2">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="3">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="4">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="5">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="6">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="7">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="8">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="9">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="10">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="11">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="12">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="13">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="14">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="15">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 		<lap n="16">
- 			<actual-time type="float">0.0</actual-time>
- 		</lap>
- 	</CC>
+	<CC>
+		<race-laps type="int">8</race-laps>
+		<fastest-lap type="float">0.0</fastest-lap>
+		<sector n="0">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>	
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<sector n="1">
+			<start-time type="float">0.0</start-time>
+			<last-time type="float">0.0</last-time>		
+			<fastest-time type="float">0.0</fastest-time>
+		</sector>
+		<lap n="0">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="1">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="2">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="3">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="4">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="5">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="6">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="7">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="8">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="9">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="10">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="11">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="12">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="13">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="14">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="15">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+		<lap n="16">
+			<actual-time type="float">0.0</actual-time>
+		</lap>
+	</CC>
 	<CT>
 		<race-laps type="int">8</race-laps>
 		<fastest-lap type="float">0.0</fastest-lap>
@@ -862,7 +885,7 @@ and have fun!</text>
 		<lap n="13">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
-	</CT>  
+	</CT>   
 	<BO>
 		<race-laps type="int">8</race-laps>
 		<fastest-lap type="float">0.0</fastest-lap>
@@ -918,8 +941,8 @@ and have fun!</text>
 		<lap n="13">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
-	</BO> 
- </Suzuki-GSX-R>
+	</BO>     
+</Suzuki-GSX-R>	
  
  <!--CONTROLS-->
 	<controls>
@@ -933,11 +956,15 @@ and have fun!</text>
 			</engine>
 		</engines>
 		<flight>
-  		  <select-throttle-input type="int">0.0</select-throttle-input>
-  		  <throttle-input type="float">0.0</throttle-input>
-  		  <throttle-on-elev-axis type="float">0.0</throttle-on-elev-axis>
+		  <select-throttle-input type="int">0.0</select-throttle-input>
+		  <throttle-input type="float">0.0</throttle-input>
+		  <throttle-on-elev-axis type="float">0.0</throttle-on-elev-axis>
 		  <flaps>0.0</flaps> <!-- helper for the fastcircuit -->
 		</flight>
+		<fuel>
+			<remember-level type="float">0.0</remember-level>
+		</fuel>
+		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>
@@ -949,7 +976,13 @@ and have fun!</text>
 				<speed-limiter-switch type="bool">0</speed-limiter-switch>
 				<selection type="int">0</selection>
 			</speed-indicator>
-		</Suzuki-GSX-R> 
+			<distance-calculator>
+				<mzaehler type="float">0.0</mzaehler>
+				<dmzaehler type="float">0.0</dmzaehler>
+				<miles type="float">0.0</miles>
+				<dmiles type="float">0.0</dmiles>
+			</distance-calculator>
+		</Suzuki-GSX-R>
 		<transponder>
 			<id-code type="int">26</id-code>
 		</transponder>
@@ -957,7 +990,7 @@ and have fun!</text>
  <!-- INPUT -->
 
 <input>
-	<keyboard>		
+	<keyboard>
 		<key n="114"> 
          <name>recording</name>
          <desc>lap record</desc>         
@@ -999,6 +1032,22 @@ and have fun!</text>
 		  <property>sim/model/start-idling</property>
 		  <value>1</value>
 	     </binding>
+		</key>
+		<key n="113"> 
+         <name>q</name>
+         <desc>driver-looks-back</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/controls/Suzuki-GSX-R/driver-looks-back</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/controls/Suzuki-GSX-R/driver-looks-back</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
 		</key>
 		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	

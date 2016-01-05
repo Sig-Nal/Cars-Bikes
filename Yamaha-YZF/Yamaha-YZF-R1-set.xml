@@ -114,6 +114,10 @@
 			  <desc>toggle workstand</desc>
 			</key>
 			<key>
+			  <name>q</name>
+			  <desc>Driver-looks-back</desc>
+			</key>
+			<key>
 			  <name>1</name>
 			  <desc>Quick glance over the shoulder</desc>
 			</key>
@@ -954,7 +958,7 @@ and have fun!</text>
 		<lap n="13">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
-	</BO>  
+	</BO> 
 </Yamaha-YZF>
 
  <!--CONTROLS-->
@@ -1100,7 +1104,22 @@ and have fun!</text>
 		  <value>1</value>
 	     </binding>
 		</key>
-		
+		<key n="113"> 
+         <name>q</name>
+         <desc>driver-looks-back</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/controls/Yamaha-YZF/driver-looks-back</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/controls/Yamaha-YZF/driver-looks-back</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
+		</key>		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	
 		<key n="263">
 			<name>F7</name>

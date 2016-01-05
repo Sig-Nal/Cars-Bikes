@@ -107,11 +107,15 @@
 		    </key>
 			<key>
 			  <name>s</name>
-			  <desc>engine starter</desc>
+			  <desc>Engine starter</desc>
 			</key>
 			<key>
 			  <name>g/G and b/B</name>
 			  <desc>toggle workstand</desc>
+			</key>
+			<key>
+			  <name>q</name>
+			  <desc>Driver-looks-back</desc>
 			</key>
 			<key>
 			  <name>1</name>
@@ -1107,7 +1111,22 @@ and have fun!</text>
 		  <value>1</value>
 	     </binding>
 		</key>
-		
+		<key n="113"> 
+         <name>q</name>
+         <desc>driver-looks-back</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/controls/Honda-RC213V/driver-looks-back</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/controls/Honda-RC213V/driver-looks-back</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
+		</key>		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	
 		<key n="263">
 			<name>F7</name>

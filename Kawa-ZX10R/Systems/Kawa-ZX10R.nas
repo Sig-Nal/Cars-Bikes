@@ -217,6 +217,8 @@ setlistener("/controls/engines/engine[0]/throttle", func (position){
 setlistener("/instrumentation/airspeed-indicator/indicated-speed-kt", func (speed){
 	var groundspeed = getprop("/velocities/groundspeed-kt") or 0;
     var speed = speed.getValue();
+    # only for manipulate the reset m function 
+	if (speed > 10) setprop("/controls/waiting", 1);
 	if(getprop("/instrumentation/Kawa-ZX10R/speed-indicator/selection")){
 		if(groundspeed > 0.1){
 			setprop("/instrumentation/Kawa-ZX10R/speed-indicator/speed-meter", speed*1.15077945); # mph

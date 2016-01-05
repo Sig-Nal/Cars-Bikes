@@ -107,11 +107,15 @@
 		    </key>
 			<key>
 			  <name>s</name>
-			  <desc>engine starter</desc>
+			  <desc>Engine starter</desc>
 			</key>
 			<key>
 			  <name>g/G and b/B</name>
 			  <desc>toggle workstand</desc>
+			</key>
+			<key>
+			  <name>q</name>
+			  <desc>Driver-looks-back</desc>
 			</key>
 			<key>
 			  <name>1</name>
@@ -248,6 +252,7 @@ and have fun!</text>
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
 			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
 			<int n="4" alias="/controls/Suzuki-GSX-R/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="5" alias="/controls/Suzuki-GSX-R/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
 		 </generic>
 	</multiplay>
 
@@ -971,6 +976,7 @@ and have fun!</text>
 		<fuel>
 			<remember-level type="float">0.0</remember-level>
 		</fuel>
+		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>
@@ -982,6 +988,12 @@ and have fun!</text>
 				<speed-limiter-switch type="bool">0</speed-limiter-switch>
 				<selection type="int">0</selection>
 			</speed-indicator>
+			<distance-calculator>
+				<mzaehler type="float">0.0</mzaehler>
+				<dmzaehler type="float">0.0</dmzaehler>
+				<miles type="float">0.0</miles>
+				<dmiles type="float">0.0</dmiles>
+			</distance-calculator>
 		</Suzuki-GSX-R>
 		<transponder>
 			<id-code type="int">26</id-code>
@@ -1093,6 +1105,22 @@ and have fun!</text>
 		  <property>sim/model/start-idling</property>
 		  <value>1</value>
 	     </binding>
+		</key>
+		<key n="113"> 
+         <name>q</name>
+         <desc>driver-looks-back</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/controls/Suzuki-GSX-R/driver-looks-back</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/controls/Suzuki-GSX-R/driver-looks-back</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
 		</key>
 		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	

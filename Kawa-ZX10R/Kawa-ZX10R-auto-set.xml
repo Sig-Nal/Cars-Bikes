@@ -95,11 +95,15 @@
   <help>
 			<key>
 			  <name>s</name>
-			  <desc>engine starter</desc>
+			  <desc>Engine starter</desc>
 			</key>
 			<key>
 			  <name>g/G and b/B</name>
 			  <desc>toggle workstand</desc>
+			</key>
+			<key>
+			  <name>q</name>
+			  <desc>Driver-looks-back</desc>
 			</key>
 			<key>
 			  <name>1</name>
@@ -149,7 +153,7 @@ and have fun!</text>
 					<script>
 						var iskilled = getprop("/engines/engine/killed") or 0;
 						if(iskilled > 0.2){
-							settimer(func{ setprop("/engines/engine/killed",0); }, 20);
+							settimer(func{ setprop("/engines/engine/killed",0);}, 20);
 				    		screen.log.write(sprintf("Please wait 20 sec. for engine overhaul."), 1, 1, 0.0);
 						}else{
 				    		screen.log.write(sprintf("Everything is ok with your engine - nothing to do."), 1, 1, 0.0);
@@ -172,7 +176,7 @@ and have fun!</text>
 					<command>property-toggle</command>
 					<property>/Kawa-ZX10R/switch-last-fastest</property>
 				</binding>
-			</item>		
+			</item>			
 			<item>
 				<label>--- Painting ---</label>
 				<enabled>false</enabled>
@@ -183,7 +187,7 @@ and have fun!</text>
 					<command>nasal</command>
 					<script>aircraft.livery.dialog.toggle()</script>
 				</binding>
-			</item>
+			</item>			
 			<enabled type="bool">true</enabled>
 			<item>
 				<label>--- Old mens mode ---</label>
@@ -195,7 +199,7 @@ and have fun!</text>
 					<command>property-toggle</command>
 					<property>/controls/Kawa-ZX10R/old-mens-mode</property>
 				</binding>
-			</item> 			
+			</item>			
 			<item>
 				<label>Toggle throttle input axis</label>
 				<binding>
@@ -221,24 +225,22 @@ and have fun!</text>
 	
 	<multiplay>
 		 <generic>
- 			<float n="0" alias="/gear/gear[0]/rollspeed-ms"/> <!-- wheel rotation -->
- 			<float n="1" alias="/gear/gear[1]/rollspeed-ms"/> <!-- wheel rotation -->
- 			<float n="2" alias="/gear/gear[0]/compression-norm"/> <!-- front wheel supension -->
- 			<float n="3" alias="/controls/Kawa-ZX10R/driver-up"/> <!-- animation for pilot in workstand -->
- 			<float n="4" alias="/engines/engine/killed"/> <!-- animation broken engine in workstand -->
- 			<float n="5" alias="/gear/gear[1]/compression-norm"/>
- 			<float n="6" alias="/Kawa-ZX10R/this-lap-time"/> <!-- for mp -->
- 			<float n="7" alias="/Kawa-ZX10R/this-race-time"/> <!-- for mp -->
- 			<float n="8" alias="/Kawa-ZX10R/last-lap-time"/> <!-- for mp -->
- 			<float n="9" alias="/controls/gear/brake-right"/> <!-- for mp -->
+			<float n="0" alias="/gear/gear[0]/rollspeed-ms"/> <!-- wheel rotation -->
+			<float n="1" alias="/gear/gear[1]/rollspeed-ms"/> <!-- wheel rotation -->
+			<float n="2" alias="/gear/gear[0]/compression-norm"/> <!-- front wheel supension -->
+			<float n="3" alias="/controls/Kawa-ZX10R/driver-up"/> <!-- animation for pilot in workstand -->
+			<float n="4" alias="/engines/engine/killed"/> <!-- animation broken engine in workstand -->
+			<float n="5" alias="/gear/gear[1]/compression-norm"/>
+			<float n="6" alias="/Kawa-ZX10R/this-lap-time"/> <!-- for mp -->
+			<float n="7" alias="/Kawa-ZX10R/this-race-time"/> <!-- for mp -->
+			<float n="8" alias="/Kawa-ZX10R/last-lap-time"/> <!-- for mp --> 
 
- 			<int n="0" alias="/controls/Kawa-ZX10R/newbie"/> <!-- animation red security pullover -->
- 			<int n="1" alias="/Kawa-ZX10R/race-lap"/> 	 <!-- mp result views -->
+			<int n="0" alias="/controls/Kawa-ZX10R/newbie"/> <!-- animation red security pullover -->
+			<int n="1" alias="/Kawa-ZX10R/race-lap"/> 	 <!-- mp result views -->
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
- 			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
- 			<int n="4" alias="/controls/Kawa-ZX10R/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
-            <int n="5" alias="/controls/lighting/landing-lights"/>
- 			<int n="6" alias="/controls/gear/brake-right"/> <!-- for mp -->
+			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
+			<int n="4" alias="/controls/Kawa-ZX10R/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="5" alias="/controls/Kawa-ZX10R/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
 		 </generic>
 	</multiplay>
 
@@ -326,9 +328,10 @@ and have fun!</text>
    <clutch type="int">0</clutch>
    <killed type="float">0</killed>
    <brake-engine type="double">0.0</brake-engine>
+   <rpm_regulation type="int">0</rpm_regulation>
   </engine>
  </engines>
- 
+
 <Kawa-ZX10R>
 	<show-race-times type="bool">0</show-race-times>
 	<show-mp-times type="bool">0</show-mp-times>
@@ -398,7 +401,7 @@ and have fun!</text>
 		<lap n="7">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
-	</TT> 
+	</TT>  
 	<S100>
 		<race-laps type="int">9</race-laps>
 		<fastest-lap type="float">0.0</fastest-lap>
@@ -964,6 +967,7 @@ and have fun!</text>
 		<fuel>
 			<remember-level type="float">0.0</remember-level>
 		</fuel>
+		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>
@@ -1031,6 +1035,22 @@ and have fun!</text>
 		  <property>sim/model/start-idling</property>
 		  <value>1</value>
 	     </binding>
+		</key>
+		<key n="113"> 
+         <name>q</name>
+         <desc>driver-looks-back</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/controls/Kawa-ZX10R/driver-looks-back</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/controls/Kawa-ZX10R/driver-looks-back</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
 		</key>
 		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	
