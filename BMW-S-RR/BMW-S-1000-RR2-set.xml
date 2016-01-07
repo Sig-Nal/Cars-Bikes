@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--###################################################################################
 		Lake of Constance Hangar :: M.Kraus
-		Yamaha-YZF for Flightgear April 2015
+		BMW-S-1000-RR for Flightgear September 2014
 		This file is licenced under the terms of the GNU General Public Licence V2 or later
 		###################################################################################
 -->
 <PropertyList>
  <sim>
-		<description>Yamaha-YZF-R1</description>
+		<description>BMW-S-1000-RR</description>
 		<author>LAKE OF CONSTANCE HANGAR :: M.Kraus</author>
-		<aircraft-version>0.1.2</aircraft-version>
+		<aircraft-version>0.1.1</aircraft-version>
 		<status>alpha</status>
 		<flight-model>yasim</flight-model>
-		<aero>Yamaha-YZF-R1-yasim</aero>
+		<aero>BMW-S-1000-RR-yasim</aero>
 
 		<sound>
-			<path>Aircraft/Yamaha-YZF/Sounds/sound.xml</path>
+			<path>Aircraft/BMW-S-RR/Sounds/BMW-S-1000-RR-sound.xml</path>
 		</sound>
 
 		<model>
-			<path>Aircraft/Yamaha-YZF/Models/Yamaha-YZF-R1.xml</path>
+			<path>Aircraft/BMW-S-RR/Models/BMW-S-1000-RR.xml</path>
 		</model> 
 
 		<startup>
-			<splash-texture>Aircraft/Yamaha-YZF/splash-Yamaha-YZF.png</splash-texture>
+			<splash-texture>Aircraft/BMW-S-RR/splash-S-1000-RR.png</splash-texture>
 		</startup>
 
 		<fuel-fraction>1.0</fuel-fraction>
@@ -93,6 +93,18 @@
 		</hud>
 
   <help>
+		    <key>
+		      <name>Home</name>
+		      <desc>Shift up</desc>
+		    </key>
+		    <key>
+		      <name>End</name>
+		      <desc>Shift down</desc>
+		    </key>
+		    <key>
+		      <name>Backspace or Ctrl key</name>
+		      <desc>Clutch</desc>
+		    </key>
 			<key>
 			  <name>s</name>
 			  <desc>Engine starter</desc>
@@ -125,6 +137,22 @@
 			  <name>F9</name>
 			  <desc>Open fuel menu</desc>
 			</key>
+			<key>
+			  <name>e</name>
+			  <desc>Up no Clutch</desc>
+			</key>
+			<key>
+			  <name>f</name>
+			  <desc>Down no Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-f</name>
+			  <desc>Up with Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-d</name>
+			  <desc>Down with Clutch</desc>
+			</key>
 		<text>*** ISLE OF MAN EDITION ***
 "Ladies and Gentleman, start your engines"
 and have fun!</text>
@@ -132,7 +160,7 @@ and have fun!</text>
 	<menubar>
 		<default>
 		<menu n="10">
-			<label>YFZ-R1</label>
+			<label>S-1000-RR</label>
 			<enabled type="bool">true</enabled>
 			<item>
 				<label>--- Tools ---</label>
@@ -166,7 +194,7 @@ and have fun!</text>
 				<label>Show Sector/Lap Results</label>
 				<binding>
 					<command>property-toggle</command>
-					<property>/Yamaha-YZF/show-race-times</property>
+					<property>/BMW-S-RR/show-race-times</property>
 				</binding>
 			</item>	
 			<enabled type="bool">true</enabled>				
@@ -174,7 +202,7 @@ and have fun!</text>
 				<label>Switch last or fastest Results</label>
 				<binding>
 					<command>property-toggle</command>
-					<property>/Yamaha-YZF/switch-last-fastest</property>
+					<property>/BMW-S-RR/switch-last-fastest</property>
 				</binding>
 			</item>		
 			<item>
@@ -197,7 +225,7 @@ and have fun!</text>
 				<label>Toggle greybeard view</label>
 				<binding>
 					<command>property-toggle</command>
-					<property>/controls/Yamaha-YZF/old-mens-mode</property>
+					<property>/controls/BMW-S-RR/old-mens-mode</property>
 				</binding>
 			</item> 			
 			<item>
@@ -215,7 +243,7 @@ and have fun!</text>
 	          <label>Race settings</label>
 	          <binding>
 	            <command>nasal</command>
-	            <script>yamaha.config_dlg.open()</script>
+	            <script>bmw.config_dlg.open()</script>
 	          </binding>
 	        </item>
 		</menu>
@@ -228,18 +256,19 @@ and have fun!</text>
  			<float n="0" alias="/gear/gear[0]/rollspeed-ms"/> <!-- wheel rotation -->
  			<float n="1" alias="/gear/gear[1]/rollspeed-ms"/> <!-- wheel rotation -->
  			<float n="2" alias="/gear/gear[0]/compression-norm"/> <!-- front wheel supension -->
- 			<float n="3" alias="/controls/Yamaha-YZF/driver-up"/> <!-- animation for pilot in workstand -->
+ 			<float n="3" alias="/controls/BMW-S-RR/driver-up"/> <!-- animation for pilot in workstand -->
  			<float n="4" alias="/engines/engine/killed"/> <!-- animation broken engine in workstand -->
  			<float n="5" alias="/gear/gear[1]/compression-norm"/>
- 			<float n="6" alias="/Yamaha-YZF/this-lap-time"/> <!-- for mp -->
- 			<float n="7" alias="/Yamaha-YZF/this-race-time"/> <!-- for mp -->
- 			<float n="8" alias="/Yamaha-YZF/last-lap-time"/> <!-- for mp -->
+ 			<float n="6" alias="/BMW-S-RR/this-lap-time"/> <!-- for mp -->
+ 			<float n="7" alias="/BMW-S-RR/this-race-time"/> <!-- for mp -->
+ 			<float n="8" alias="/BMW-S-RR/last-lap-time"/> <!-- for mp -->
 
- 			<int n="0" alias="/controls/Yamaha-YZF/newbie"/> <!-- animation red security pullover -->
- 			<int n="1" alias="/Yamaha-YZF/race-lap"/> 	 <!-- mp result views -->
+ 			<int n="0" alias="/controls/BMW-S-RR/newbie"/> <!-- animation red security pullover -->
+ 			<int n="1" alias="/BMW-S-RR/race-lap"/> 	 <!-- mp result views -->
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
  			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
- 			<int n="4" alias="/controls/Yamaha-YZF/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="4" alias="/controls/BMW-S-RR/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="5" alias="/controls/BMW-S-RR/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
 		 </generic>
 	</multiplay>
 
@@ -268,48 +297,49 @@ and have fun!</text>
 	</flaps>
 		
 	<aircraft-data>
-		<path>/Yamaha-YZF/TT/fastest-lap</path>
-		<path>/Yamaha-YZF/TT/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/TT/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/TT/sector[2]/fastest-time</path>
-		<path>/Yamaha-YZF/TT/sector[3]/fastest-time</path>
-		<path>/Yamaha-YZF/TT/sector[4]/fastest-time</path>
-		<path>/Yamaha-YZF/TT/sector[5]/fastest-time</path>
-		<path>/Yamaha-YZF/S100/fastest-lap</path>
-		<path>/Yamaha-YZF/S100/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/S100/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/S100/sector[2]/fastest-time</path>
-		<path>/Yamaha-YZF/NW200/fastest-lap</path>
-		<path>/Yamaha-YZF/NW200/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/NW200/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/NW200/sector[2]/fastest-time</path>
-		<path>/Yamaha-YZF/UGP/fastest-lap</path>
-		<path>/Yamaha-YZF/UGP/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/UGP/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/MGP/fastest-lap</path>
-		<path>/Yamaha-YZF/MGP/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/MGP/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/MGP/sector[2]/fastest-time</path>
-		<path>/Yamaha-YZF/KAL/fastest-lap</path>
-		<path>/Yamaha-YZF/KAL/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/KAL/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/KAL/sector[2]/fastest-time</path>
-		<path>/Yamaha-YZF/HD/fastest-lap</path>
-		<path>/Yamaha-YZF/HD/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/HD/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/MF/fastest-lap</path>
-		<path>/Yamaha-YZF/MF/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/MF/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/CC/fastest-lap</path>
-		<path>/Yamaha-YZF/CC/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/CC/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/CT/fastest-lap</path>
-		<path>/Yamaha-YZF/CT/sector[0]/fastest-time</path>
-		<path>/Yamaha-YZF/CT/sector[1]/fastest-time</path>
-		<path>/Yamaha-YZF/CT/sector[2]/fastest-time</path>
+		<path>/BMW-S-RR/TT/fastest-lap</path>
+		<path>/BMW-S-RR/TT/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/TT/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/TT/sector[2]/fastest-time</path>
+		<path>/BMW-S-RR/TT/sector[3]/fastest-time</path>
+		<path>/BMW-S-RR/TT/sector[4]/fastest-time</path>
+		<path>/BMW-S-RR/TT/sector[5]/fastest-time</path>
+		<path>/BMW-S-RR/S100/fastest-lap</path>
+		<path>/BMW-S-RR/S100/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/S100/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/S100/sector[2]/fastest-time</path>
+		<path>/BMW-S-RR/NW200/fastest-lap</path>
+		<path>/BMW-S-RR/NW200/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/NW200/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/NW200/sector[2]/fastest-time</path>
+		<path>/BMW-S-RR/UGP/fastest-lap</path>
+		<path>/BMW-S-RR/UGP/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/UGP/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/MGP/fastest-lap</path>
+		<path>/BMW-S-RR/MGP/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/MGP/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/MGP/sector[2]/fastest-time</path>
+		<path>/BMW-S-RR/KAL/fastest-lap</path>
+		<path>/BMW-S-RR/KAL/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/KAL/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/KAL/sector[2]/fastest-time</path>
+		<path>/BMW-S-RR/HD/fastest-lap</path>
+		<path>/BMW-S-RR/HD/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/HD/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/MF/fastest-lap</path>
+		<path>/BMW-S-RR/MF/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/MF/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/CC/fastest-lap</path>
+		<path>/BMW-S-RR/CC/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/CC/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/CT/fastest-lap</path>
+		<path>/BMW-S-RR/CT/sector[0]/fastest-time</path>
+		<path>/BMW-S-RR/CT/sector[1]/fastest-time</path>
+		<path>/BMW-S-RR/CT/sector[2]/fastest-time</path>
 		<path>/controls/flight/select-throttle-input</path>
-		<path>/controls/Yamaha-YZF/old-mens-mode</path>
+		<path>/controls/BMW-S-RR/old-mens-mode</path>
 		<path>/controls/hang-off-speed</path>
+		<path>/instrumentation/BMW-S-RR/distance-calculator/mzaehler</path>
 		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
 	<current-view>
@@ -334,7 +364,7 @@ and have fun!</text>
   </engine>
  </engines>
  
-<Yamaha-YZF>
+<BMW-S-RR>
 	<show-race-times type="bool">0</show-race-times>
 	<show-mp-times type="bool">0</show-mp-times>
 	<switch-last-fastest type="bool">0</switch-last-fastest>
@@ -890,7 +920,7 @@ and have fun!</text>
 		<lap n="13">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
-	</CT> 
+	</CT>
 	<BO>
 		<race-laps type="int">8</race-laps>
 		<fastest-lap type="float">0.0</fastest-lap>
@@ -946,14 +976,14 @@ and have fun!</text>
 		<lap n="13">
 			<actual-time type="float">0.0</actual-time>
 		</lap>
-	</BO> 
-</Yamaha-YZF>
+	</BO>  
+</BMW-S-RR>
 
  <!--CONTROLS-->
 	<controls>
-	    <Yamaha-YZF>
+	    <BMW-S-RR>
 	 	   <newbie type="bool">0</newbie>
-	    </Yamaha-YZF>
+	    </BMW-S-RR>
 		<!--engines-->
 		<engines>
 			<engine n="0">
@@ -969,18 +999,25 @@ and have fun!</text>
 		<fuel>
 			<remember-level type="float">0.0</remember-level>
 		</fuel>
+		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>
 		<!--engines-->
-		<Yamaha-YZF>
+		<BMW-S-RR>
 			<speed-indicator>
 				<speed-meter type="float">0.0</speed-meter>
 				<speed-limiter type="float">0.0</speed-limiter>
 				<speed-limiter-switch type="bool">0</speed-limiter-switch>
 				<selection type="int">0</selection>
 			</speed-indicator>
-		</Yamaha-YZF>
+			<distance-calculator>
+				<mzaehler type="float">0.0</mzaehler>
+				<dmzaehler type="float">0.0</dmzaehler>
+				<miles type="float">0.0</miles>
+				<dmiles type="float">0.0</dmiles>
+			</distance-calculator>
+		</BMW-S-RR>
 		<transponder>
 			<id-code type="int">26</id-code>
 		</transponder>
@@ -1010,12 +1047,115 @@ and have fun!</text>
          <desc>last or fastest lap times</desc>
          <binding>
 		  <command>property-toggle</command>
-		  <property>/Yamaha-YZF/switch-last-fastest</property>
+		  <property>/BMW-S-RR/switch-last-fastest</property>
 	     </binding>
+		</key>
+	  <!--shift up/down-->
+        <key n="362"> 
+         <name>Home</name>
+         <desc>Shift Up</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+        <key n="363"> 
+          <name>End</name>
+          <desc>Shift Down</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">-1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+        <key n="6"> 
+         <name>Ctrl-f</name>
+         <desc>Shift Up Alternative</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+        <key n="4"> 
+          <name>Ctrl-d</name>
+          <desc>Shift Down Alternative</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">-1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+
+      <key n="101">
+      <name>e</name>
+      <desc>Shift Up NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(-1);
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);       
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+   <key n="102">
+      <name>f</name>
+      <desc>Shift Down NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(1);         
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+
+		<key n="8"> 
+         <name>Backspace</name>
+         <desc>Clutch</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/engines/engine/clutch</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/engines/engine/clutch</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
 		</key>
 		<key n="83"> 
          <name>Start/Stop</name>
-         <desc>Starter</desc>
+         <desc>Clutch</desc>
          <binding>
 		  <command>property-toggle</command>
 		  <property>sim/model/start-idling</property>
@@ -1024,7 +1164,7 @@ and have fun!</text>
 		</key>
 		<key n="115"> 
          <name>Start/Stop</name>
-         <desc>Starter</desc>
+         <desc>Clutch</desc>
          <binding>
 		  <command>property-toggle</command>
 		  <property>sim/model/start-idling</property>
@@ -1036,17 +1176,18 @@ and have fun!</text>
          <desc>driver-looks-back</desc>
          <binding>
 		  <command>property-assign</command>
-		  <property>/controls/Yamaha-YZF/driver-looks-back</property>
+		  <property>/controls/BMW-S-RR/driver-looks-back</property>
 		  <value>1</value>
 	     </binding>
 		 <mod-up>
 		  <binding>
            <command>property-assign</command>
-		   <property>/controls/Yamaha-YZF/driver-looks-back</property>
+		   <property>/controls/BMW-S-RR/driver-looks-back</property>
 		   <value>0</value>
           </binding>
 		 </mod-up>
-		</key>		
+		</key>
+		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	
 		<key n="263">
 			<name>F7</name>
@@ -1062,13 +1203,13 @@ and have fun!</text>
 			<binding>
 				<command>nasal</command>
 				<script>
-					var s1 = getprop("/Yamaha-YZF/show-race-times") or 0;
+					var s1 = getprop("/BMW-S-RR/show-race-times") or 0;
 					var s2 = getprop("/road-racer/show-mp-times") or 0;
 					if(s1 or s2){
-						setprop("/Yamaha-YZF/show-race-times", 0);
+						setprop("/BMW-S-RR/show-race-times", 0);
 						setprop("/road-racer/show-mp-times", 0);
 					}else{
-						setprop("/Yamaha-YZF/show-race-times", 1);
+						setprop("/BMW-S-RR/show-race-times", 1);
 						setprop("/road-racer/show-mp-times", 1);
 					}
 				</script>
@@ -1089,13 +1230,13 @@ and have fun!</text>
 <!-- -NASAL- -->
  <nasal>
 
-  <yamaha>
-   <file>Aircraft/Yamaha-YZF/Systems/Yamaha-YZF.nas</file>
-   <file>Aircraft/Yamaha-YZF/Systems/gearbox_auto.nas</file>
-   <file>Aircraft/Yamaha-YZF/Systems/liveries-R1.nas</file>
-   <file>Aircraft/Yamaha-YZF/Systems/laptimes.nas</file>
-   <file>Aircraft/Yamaha-YZF/VirtualRacer/virtual_racer.nas</file>
-  </yamaha>
+  <bmw>
+   <file>Aircraft/BMW-S-RR/Systems/BMW-S-RR.nas</file>
+   <file>Aircraft/BMW-S-RR/Systems/gearbox.nas</file>
+   <file>Aircraft/BMW-S-RR/Systems/liveries.nas</file>
+   <file>Aircraft/BMW-S-RR/Systems/laptimes.nas</file>
+   <file>Aircraft/BMW-S-RR/VirtualRacer/virtual_racer.nas</file>
+  </bmw>
 
  </nasal>
 </PropertyList>

@@ -71,8 +71,8 @@ var loop = func {
 		clutch.setValue(0);
 	}
 	
-	#gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;	
-	gspeed = getprop("/velocities/groundspeed-kt") or 0;
+	gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;	
+	#gspeed = getprop("/velocities/groundspeed-kt") or 0;
 	var bwspeed = getprop("/gear/gear[1]/rollspeed-ms") or 0;
 	bwspeed = bwspeed*2.23694; # meter per secondes to miles per hour
 	

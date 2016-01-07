@@ -1,10 +1,11 @@
 ###############################################################################################
 #		Lake of Constance Hangar :: M.Kraus
-#		Yamaha-YZF for Flightgear April 2015
+#		Yamaha-YZF for Flightgear December 2014
 #		This file is licenced under the terms of the GNU General Public Licence V2 or later
 ###############################################################################################
 var config_dlg = gui.Dialog.new("/sim/gui/dialogs/config/dialog", getprop("/sim/aircraft-dir")~"/Systems/config.xml");
 var hangoffspeed = props.globals.initNode("/controls/hang-off-speed",80,"DOUBLE");
+var hangoffhdg = props.globals.initNode("/controls/hang-off-hdg",0,"DOUBLE");
 var waiting = props.globals.initNode("/controls/waiting",0,"DOUBLE");
 
 ################## Little Help Window on bottom of screen #################
@@ -39,47 +40,70 @@ var forkcontrol = func{
 	}else{
 		f.setValue(r);
 	}
-	if(bs > 40){
+	if(bs > 38){
 		setprop("/controls/gear/brake-front", bl);
 	}else{
 		setprop("/controls/gear/brake-front", 0);
 	}
-	settimer(forkcontrol, 0.05);
+	
+	# shoulder view helper
+	var cv = getprop("sim/current-view/view-number") or 0;
+	var apos = getprop("/devices/status/keyboard/event/key") or 0;
+	var press = getprop("/devices/status/keyboard/event/pressed") or 0;
+	var du = getprop("/controls/Yamaha-YZF/driver-up") or 0;
+	#helper turn shoulder to look back
+	if(cv == 0 and !du){
+		if(apos == 49 and press){
+			setprop("/sim/current-view/heading-offset-deg", 155);
+			setprop("/controls/Yamaha-YZF/driver-looks-back",1);
+		}else if(apos == 50 and press){
+			setprop("/sim/current-view/heading-offset-deg", -155);
+			setprop("/controls/Yamaha-YZF/driver-looks-back-right",1);
+		}else{
+			var hdgpos = 0;
+		    var posi = getprop("/controls/flight/aileron-manual") or 0;
+		  	if(posi > 0.0001 and getprop("/controls/hangoff") == 1){
+				var mw = 60 - ((210-bs)*60/210); #maxBlickwinkel - ((maxGeschwindigkeit-aktuelleGeschwindigkeit)*maxBlickwinkel/maxGeschwindigkeit)
+				hdgpos = 360 - mw*posi;
+				hdgpos = (hdgpos < 335) ? 335 : hdgpos;
+				#help_win.write(sprintf("Blickwinkel: %.2f", hdgpos));
+		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+		  	}else if (posi < -0.0001 and getprop("/controls/hangoff") == 1){
+				var mw = 60 - ((210-bs)*60/210);
+				hdgpos = mw*abs(posi);
+				hdgpos = (hdgpos > 25) ? 25 : hdgpos;
+				#help_win.write(sprintf("Blickwinkel: %.2f", hdgpos));
+		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+			}else if (posi > 0 and posi < 0.0001 and getprop("/controls/hangoff") == 1){
+				setprop("/sim/current-view/goal-heading-offset-deg", 360);
+			}else{
+				setprop("/sim/current-view/goal-heading-offset-deg", 0);
+			}
+			setprop("/controls/Yamaha-YZF/driver-looks-back",0);
+			setprop("/controls/Yamaha-YZF/driver-looks-back-right",0);
+		}
+	}
+	
+	# distance calculator helper
+	if(getprop("/instrumentation/Yamaha-YZF/speed-indicator/selection")){
+		setprop("/instrumentation/Yamaha-YZF/distance-calculator/miles", getprop("/instrumentation/Yamaha-YZF/distance-calculator/mzaehler")*0.621371192); # miles on bike
+		setprop("/instrumentation/Yamaha-YZF/distance-calculator/dmiles", getprop("/instrumentation/Yamaha-YZF/distance-calculator/dmzaehler")*0.621371192); # miles a day
+	}else{
+		setprop("/instrumentation/Yamaha-YZF/distance-calculator/miles", getprop("/instrumentation/Yamaha-YZF/distance-calculator/mzaehler")); # km on bike
+		setprop("/instrumentation/Yamaha-YZF/distance-calculator/dmiles", getprop("/instrumentation/Yamaha-YZF/distance-calculator/dmzaehler")); # km a day
+	}
+	
+	settimer(forkcontrol, 0);
 };
 
 forkcontrol();
-
-
-var temp_fake_calc = func{
-
-	var et = getprop("/engines/engine[0]/engine-temperatur") or 0;
-    var ek = getprop("/engines/engine/killed") or 0;
-	var eat = getprop("/environment/temperature-degc") or 0;
-	var eru = getprop("engines/engine/running") or 0;
-	var erp = getprop("engines/engine/rpm") or 0;
-	var net = 0;
-	if(eru){
-		if (ek > 0) {
-			net = et * ek + et;
-		}else{
-			net = eat + 74 + erp/990;
-		}
-	}else{
-		net = eat;
-	}
-
-	interpolate("/engines/engine[0]/engine-temperatur", net, 40);
-	settimer(temp_fake_calc, 40);
-};
-
-temp_fake_calc();
 
 setlistener("/devices/status/mice/mouse/button", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(-1);
+		controls.flapsDown(0);
 	}
 },0,1);
 
@@ -88,7 +112,7 @@ setlistener("/devices/status/mice/mouse/button[2]", func (state){
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(1);
+		controls.flapsDown(0);
 	}
 },0,1);
 
@@ -138,16 +162,16 @@ setlistener("/surface-positions/left-aileron-pos-norm", func{
 			var godown = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
 			var lookup = getprop("/controls/gear/brake-right") or 0;
 			var onwork = getprop("/controls/hangoff") or 0;
-			if(godown > 10 and godown < hangoffspeed.getValue()){
-				var factor = (position <= 0)? -0.38 : 0.38;
+			if(godown < hangoffspeed.getValue()){
+				var factor = (position <= 0)? -0.6 : 0.6;
 				factor = (abs(factor) > abs(position)) ? position : factor;
 				if(onwork == 0){
 					settimer(func{setprop("/controls/hangoff",1)},0.1);
-					interpolate("/sim/current-view/x-offset-m", math.sin(factor*2.0)*(1.34+driverpos/5),0.1);
-					interpolate("/sim/current-view/y-offset-m", math.cos(factor*2.4)*(1.36 - godown/1300 + lookup/12 + driverpos/4),0.1);
+					interpolate("/sim/current-view/x-offset-m", math.sin(factor*1.8)*(1.34+driverpos/5),0.1);
+					interpolate("/sim/current-view/y-offset-m", math.cos(factor*2.1)*(1.36 - godown/1300 + lookup/12 + driverpos/4),0.1);
 				}else{
-					setprop("/sim/current-view/x-offset-m", math.sin(factor*2.0)*(1.34+driverpos/5));
-					setprop("/sim/current-view/y-offset-m", math.cos(factor*2.4)*(1.36 - godown/1300 + lookup/12 + driverpos/4));
+					setprop("/sim/current-view/x-offset-m", math.sin(factor*1.8)*(1.34+driverpos/5));
+					setprop("/sim/current-view/y-offset-m", math.cos(factor*2.1)*(1.36 - godown/1300 + lookup/12 + driverpos/4));
 				}
 			}else{
 				if(onwork == 1){
@@ -180,8 +204,18 @@ setlistener("/controls/flight/elevator", func (position){
 	
 	# helper for throtte on throttle axis or elevator
 	var se = getprop("/controls/flight/select-throttle-input") or 0;
-	if (ms == 0 and se == 1 and position >= 0) setprop("/controls/flight/throttle-input", position);
+	if (ms == 0){
+		if(se == 1 and position >= 0) setprop("/controls/flight/throttle-input", position);
+		if(se == 0){
+			position = (position < 0) ? abs(position) : 0;
+			vortrieb = getprop("/engines/engine/propulsion") or 0;
+			setprop("/sim/weight[1]/weight-lb", position*400*vortrieb);
+		}
+	} 
 	if (ms == 1 and position >= 0) setprop("/controls/flight/throttle-input", position*4);
+	
+	
+	
 },0,1);
 
 
@@ -196,18 +230,20 @@ setlistener("/controls/engines/engine[0]/throttle", func (position){
 
 #----- speed meter selection ------
 
-setlistener("/instrumentation/airspeed-indicator/indicated-speed-kt", func (speed){
-	var groundspeed = getprop("/velocities/groundspeed-kt") or 0;
-    var speed = speed.getValue();
+setlistener("/gear/gear/rollspeed-ms", func (speed){
+	var speed = speed.getValue();
+    # only for manipulate the reset m function 
+	if (speed > 10) setprop("/controls/waiting", 1);
+	# speedmeter function
 	if(getprop("/instrumentation/Yamaha-YZF/speed-indicator/selection")){
-		if(groundspeed > 0.1){
-			setprop("/instrumentation/Yamaha-YZF/speed-indicator/speed-meter", speed*1.15077945); # mph
+		if(speed > 0.1){
+			setprop("/instrumentation/Yamaha-YZF/speed-indicator/speed-meter", speed*3600/1000*0.621371); # mph
 		}else{
 			setprop("/instrumentation/Yamaha-YZF/speed-indicator/speed-meter", 0);
 		}
 	}else{
-		if(groundspeed > 0.1){
-			setprop("/instrumentation/Yamaha-YZF/speed-indicator/speed-meter", speed*1.852); # km/h
+		if(speed > 0.1){
+			setprop("/instrumentation/Yamaha-YZF/speed-indicator/speed-meter", speed*3600/1000); # km/h
 		}else{
 			setprop("/instrumentation/Yamaha-YZF/speed-indicator/speed-meter", 0);
 		}
@@ -337,3 +373,7 @@ setlistener("sim/model/start-idling", func()
 		}
    }
   }, 1, 1);
+
+ 
+
+ 

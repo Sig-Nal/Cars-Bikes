@@ -7,19 +7,19 @@
 -->
 <PropertyList>
  <sim>
-		<description>Yamaha-YZF-R1</description>
+		<description>Yamaha-YZF-M1</description>
 		<author>LAKE OF CONSTANCE HANGAR :: M.Kraus</author>
-		<aircraft-version>0.1.2</aircraft-version>
+		<aircraft-version>0.0.1</aircraft-version>
 		<status>alpha</status>
 		<flight-model>yasim</flight-model>
-		<aero>Yamaha-YZF-R1-yasim</aero>
+		<aero>Yamaha-YZF-M1-yasim</aero>
 
 		<sound>
 			<path>Aircraft/Yamaha-YZF/Sounds/sound.xml</path>
 		</sound>
 
 		<model>
-			<path>Aircraft/Yamaha-YZF/Models/Yamaha-YZF-R1.xml</path>
+			<path>Aircraft/Yamaha-YZF/Models/Yamaha-YZF-M1.xml</path>
 		</model> 
 
 		<startup>
@@ -93,6 +93,18 @@
 		</hud>
 
   <help>
+		    <key>
+		      <name>Home</name>
+		      <desc>Shift up</desc>
+		    </key>
+		    <key>
+		      <name>End</name>
+		      <desc>Shift down</desc>
+		    </key>
+		    <key>
+		      <name>Backspace or Ctrl key</name>
+		      <desc>Clutch</desc>
+		    </key>
 			<key>
 			  <name>s</name>
 			  <desc>Engine starter</desc>
@@ -124,6 +136,22 @@
 			<key>
 			  <name>F9</name>
 			  <desc>Open fuel menu</desc>
+			</key>
+			<key>
+			  <name>e</name>
+			  <desc>Up no Clutch</desc>
+			</key>
+			<key>
+			  <name>f</name>
+			  <desc>Down no Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-f</name>
+			  <desc>Up with Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-d</name>
+			  <desc>Down with Clutch</desc>
 			</key>
 		<text>*** ISLE OF MAN EDITION ***
 "Ladies and Gentleman, start your engines"
@@ -240,6 +268,7 @@ and have fun!</text>
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
  			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
  			<int n="4" alias="/controls/Yamaha-YZF/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="5" alias="/controls/Yamaha-YZF/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
 		 </generic>
 	</multiplay>
 
@@ -310,6 +339,7 @@ and have fun!</text>
 		<path>/controls/flight/select-throttle-input</path>
 		<path>/controls/Yamaha-YZF/old-mens-mode</path>
 		<path>/controls/hang-off-speed</path>
+		<path>/instrumentation/Yamaha-YZF/distance-calculator/mzaehler</path>
 		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
 	<current-view>
@@ -969,6 +999,7 @@ and have fun!</text>
 		<fuel>
 			<remember-level type="float">0.0</remember-level>
 		</fuel>
+		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>
@@ -980,6 +1011,12 @@ and have fun!</text>
 				<speed-limiter-switch type="bool">0</speed-limiter-switch>
 				<selection type="int">0</selection>
 			</speed-indicator>
+			<distance-calculator>
+				<mzaehler type="float">0.0</mzaehler>
+				<dmzaehler type="float">0.0</dmzaehler>
+				<miles type="float">0.0</miles>
+				<dmiles type="float">0.0</dmiles>
+			</distance-calculator>
 		</Yamaha-YZF>
 		<transponder>
 			<id-code type="int">26</id-code>
@@ -1013,9 +1050,112 @@ and have fun!</text>
 		  <property>/Yamaha-YZF/switch-last-fastest</property>
 	     </binding>
 		</key>
+	  <!--shift up/down-->
+        <key n="362"> 
+         <name>Home</name>
+         <desc>Shift Up</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+        <key n="363"> 
+          <name>End</name>
+          <desc>Shift Down</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">-1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+        <key n="6"> 
+         <name>Ctrl-f</name>
+         <desc>Shift Up Alternative</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+        <key n="4"> 
+          <name>Ctrl-d</name>
+          <desc>Shift Down Alternative</desc>
+         <binding>
+          <command>property-adjust</command>
+          <property>/engines/engine/gear</property>
+          <step type="double">-1</step>
+          <min type="double">0</min>
+          <max type="double">6</max>
+	   </binding>
+        </key>
+
+      <key n="101">
+      <name>e</name>
+      <desc>Shift Up NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(-1);
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);       
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+   <key n="102">
+      <name>f</name>
+      <desc>Shift Down NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(1);         
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+
+		<key n="8"> 
+         <name>Backspace</name>
+         <desc>Clutch</desc>
+         <binding>
+		  <command>property-assign</command>
+		  <property>/engines/engine/clutch</property>
+		  <value>1</value>
+	     </binding>
+		 <mod-up>
+		  <binding>
+           <command>property-assign</command>
+		   <property>/engines/engine/clutch</property>
+		   <value>0</value>
+          </binding>
+		 </mod-up>
+		</key>
 		<key n="83"> 
          <name>Start/Stop</name>
-         <desc>Starter</desc>
+         <desc>Clutch</desc>
          <binding>
 		  <command>property-toggle</command>
 		  <property>sim/model/start-idling</property>
@@ -1024,7 +1164,7 @@ and have fun!</text>
 		</key>
 		<key n="115"> 
          <name>Start/Stop</name>
-         <desc>Starter</desc>
+         <desc>Clutch</desc>
          <binding>
 		  <command>property-toggle</command>
 		  <property>sim/model/start-idling</property>
@@ -1046,7 +1186,8 @@ and have fun!</text>
 		   <value>0</value>
           </binding>
 		 </mod-up>
-		</key>		
+		</key>
+		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	
 		<key n="263">
 			<name>F7</name>
@@ -1091,8 +1232,8 @@ and have fun!</text>
 
   <yamaha>
    <file>Aircraft/Yamaha-YZF/Systems/Yamaha-YZF.nas</file>
-   <file>Aircraft/Yamaha-YZF/Systems/gearbox_auto.nas</file>
-   <file>Aircraft/Yamaha-YZF/Systems/liveries-R1.nas</file>
+   <file>Aircraft/Yamaha-YZF/Systems/gearbox.nas</file>
+   <file>Aircraft/Yamaha-YZF/Systems/liveries.nas</file>
    <file>Aircraft/Yamaha-YZF/Systems/laptimes.nas</file>
    <file>Aircraft/Yamaha-YZF/VirtualRacer/virtual_racer.nas</file>
   </yamaha>

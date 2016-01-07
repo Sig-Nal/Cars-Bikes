@@ -103,7 +103,7 @@ setlistener("/devices/status/mice/mouse/button", func (state){
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(-1);
+		controls.flapsDown(0);
 	}
 },0,1);
 
@@ -112,7 +112,7 @@ setlistener("/devices/status/mice/mouse/button[2]", func (state){
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(1);
+		controls.flapsDown(0);
 	}
 },0,1);
 

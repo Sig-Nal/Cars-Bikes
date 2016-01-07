@@ -89,7 +89,7 @@ setlistener("/devices/status/mice/mouse/button", func (state){
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(-1);
+		controls.flapsDown(0);
 	}
 },0,1);
 
@@ -98,7 +98,7 @@ setlistener("/devices/status/mice/mouse/button[2]", func (state){
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(1);
+		controls.flapsDown(0);
 	}
 },0,1);
 
@@ -208,6 +208,8 @@ setlistener("/controls/engines/engine[0]/throttle", func (position){
 
 setlistener("/gear/gear/rollspeed-ms", func (speed){
     var speed = speed.getValue();
+    # only for manipulate the reset m function 
+	if (speed > 5) setprop("/controls/waiting", 1);
 	if(getprop("/instrumentation/Honda-RC213V/speed-indicator/selection")){
 		if(speed > 0.1){
 			setprop("/instrumentation/Honda-RC213V/speed-indicator/speed-meter", speed*3600/1000*0.621371); # mph

@@ -68,6 +68,8 @@ var loop = func {
 	
 	gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
 	speed = getprop("/instrumentation/BMW-S-RR/speed-indicator/speed-meter");
+	var bwspeed = getprop("/gear/gear[1]/rollspeed-ms") or 0;
+	bwspeed = bwspeed*2.23694; # meter per secondes to miles per hour
 
 	# ----------- ENGINE IS RUNNING --------------
 	if(running.getValue() == 1){

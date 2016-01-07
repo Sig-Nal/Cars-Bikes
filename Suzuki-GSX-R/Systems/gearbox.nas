@@ -36,6 +36,7 @@ var speedlimiter = props.globals.getNode("/instrumentation/Suzuki-GSX-R/speed-in
 var speedlimstate = props.globals.getNode("/instrumentation/Suzuki-GSX-R/speed-indicator/speed-limiter-switch");
 var speed = 0;
 var gspeed = 0;
+var ascon = props.globals.initNode("/controls/Suzuki-GSX-R/ASC/on-off",1,"BOOL");
 
 ###########################################################################
 
@@ -70,8 +71,8 @@ var loop = func {
 		clutch.setValue(0);
 	}
 	
-	#gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;	
-	gspeed = getprop("/velocities/groundspeed-kt") or 0;
+	gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
+	#gspeed = getprop("/velocities/groundspeed-kt") or 0;
 	var bwspeed = getprop("/gear/gear[1]/rollspeed-ms") or 0;
 	bwspeed = bwspeed*2.23694; # meter per secondes to miles per hour
 	
@@ -164,8 +165,10 @@ var loop = func {
 			  setprop("/sim/weight[1]/weight-lb", throttle.getValue()*300);
 			}else if(fastcircuit.getValue() == 0.2){
 			  transmissionpower = 0.9*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  setprop("/sim/weight[1]/weight-lb", throttle.getValue()*100);
 			}else if(fastcircuit.getValue() == 0.3){
 			  transmissionpower = 0.6*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  setprop("/sim/weight[1]/weight-lb", 0);
 			}else if(fastcircuit.getValue() == 0.4){
 			  transmissionpower = 0.5*throttle.getValue()-propulsion.getValue()/maxrpm;
 			}else if(fastcircuit.getValue() == 0.5){
