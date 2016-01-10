@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--###################################################################################
+	Lake of Constance Hangar :: M.Kraus
+	Honda-NSF100 for Flightgear December 2015
+	This file is licenced under the terms of the GNU General Public Licence V2 or later
+	###################################################################################
+-->
+
+<PropertyList>
+<sim>
+    <model>
+        <livery>
+            <name type="string">HRC White</name>
+            <texture>Honda-NSF100.png</texture>
+        </livery>
+    </model>
+</sim>
+</PropertyList>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--###################################################################################
+		Lake of Constance Hangar :: Marc Kraus
+		Honda-NSF100 for Flightgear December 2015
+		This file is licenced under the terms of the GNU General Public Licence V2 or later
+		###################################################################################
+-->
+<PropertyList>
+
+<path>tacho.ac</path>
+	
+	<model>
+	<path>Aircraft/Honda-NSF/Models/Lights/lightcone-mini.xml</path>
+	<name>lights</name>
+	<offsets>   
+	  <x-m> 0.25</x-m>
+	  <y-m> 0.03</y-m>
+	  <z-m> 0.08</z-m>
+	  <pitch-deg>75</pitch-deg>
+	</offsets>
+	</model>
+	
+	<animation>
+		 <type>material</type>
+		 <object-name>overspeedlight</object-name>
+		 <emission>
+		  <red>1</red>
+		  <green>0</green>
+		  <blue>0</blue>
+		  <factor-prop>systems/electrical/outputs/instrument-lights</factor-prop>
+	   	</emission>
+	</animation>
+	
+    <animation>
+      <type>select</type>
+		 <object-name>overspeedlight</object-name>
+      <condition>
+          <property>controls/Honda-NSF/ctrl-light-overspeed</property>
+      </condition>
+    </animation>
+	
+	<animation>
+	  <type>select</type>
+	  <object-name>lights</object-name>
+	  <condition>
+	 	<property>/sim/rendering/rembrandt/enabled</property>
+		<greater-than>
+	 		<property>/sim/time/sun-angle-rad</property>
+			<value>1.4</value>
+		</greater-than>
+	 </condition>
+	</animation>
+	
+    <animation>
+        <type>pick</type>
+        <object-name>background</object-name>
+		<visible>true</visible>
+        <action>
+ 	    <button>0</button>
+            <binding>	    
+	    	  <command>property-toggle</command>
+			<property>instrumentation/Honda-NSF/speed-indicator/selection</property>
+			<step>1</step>
+			<min>0</min>
+			<max>1</max>
+			<wrap>1</wrap>		
+            </binding>           
+        </action>
+    </animation>
+	
+    <animation>
+        <type>rotate</type>
+		<object-name>schalter</object-name>
+        <property>engines/engine/rpm_regulation</property>
+        <factor>-90</factor>
+      <center>
+       <x-m>0.0018</x-m>
+       <y-m>-0.088</y-m>
+       <z-m>0.0</z-m>
+      </center>
+      <axis>
+        <x>  1 </x>
+        <y>  0 </y>
+        <z>  0 </z>
+      </axis>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>schalter</object-name>
+		<visible>true</visible>
+        <action>
+ 	    <button>0</button>
+            <binding>	    
+	    	  <command>property-toggle</command>
+			  <property>engines/engine/rpm_regulation</property>	
+            </binding>           
+        </action>
+    </animation>	
+
+	<animation>
+	  <type>rotate</type>
+	  <object-name>RPM.Needle</object-name>
+	  <property>/engines/engine/rpm</property>
+	  <interpolation>
+	    <entry><ind>  0</ind><dep>    	0</dep></entry>
+		<entry><ind> 3000</ind><dep>    0</dep></entry>
+	    <entry><ind>14000</ind><dep>230.0</dep></entry>
+	    <entry><ind>40000</ind><dep>235.0</dep></entry>
+	  </interpolation>
+	  <axis>
+	    <x>-1</x>
+	    <y>0</y>
+	    <z>0</z>
+	  </axis>
+	</animation>
+
+</PropertyList>

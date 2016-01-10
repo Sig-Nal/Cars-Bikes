@@ -1,15 +1,16 @@
-###################################################################################
-#		Lake of Constance Hangar :: M.Kraus
-#		Yamaha-YZF for Flightgear April 2015
+###############################################################################################
+#		Idea from DetlefF. and LesterB.
+#		written by Lake of Constance Hangar :: M.Kraus
+#		BMW S 1000 RR for Flightgear September 2014
 #		This file is licenced under the terms of the GNU General Public Licence V2 or later
-###########################################################################################
+############################################################################################### 
 
 var fuel = props.globals.getNode("consumables/fuel/tank/level-m3");
 var fuel_lev = 0;
 var fuel_weight = props.globals.getNode("consumables/fuel/total-fuel-lbs"); # max 31lbs
 var running = props.globals.getNode("/engines/engine/running");
 var gear = props.globals.getNode("/engines/engine/gear");
-var gearsound = props.globals.getNode("/engines/engine/gear-sound");
+var gearsound = props.globals.initNode("/engines/engine/gear-sound",0,"DOUBLE");
 var fastcircuit = props.globals.getNode("/controls/flight/flaps");
 var clutch = props.globals.getNode("/engines/engine/clutch");
 var secclutchcontrol = props.globals.getNode("/devices/status/keyboard/ctrl");
@@ -37,29 +38,24 @@ var speedlimiter = props.globals.getNode("/instrumentation/Yamaha-YZF/speed-indi
 var speedlimstate = props.globals.getNode("/instrumentation/Yamaha-YZF/speed-indicator/speed-limiter-switch");
 var speed = 0;
 var gspeed = 0;
-var ascon = props.globals.initNode("/controls/Yamaha-YZF/SCS/on-off",1,"BOOL");
+var ascon = props.globals.initNode("/controls/Yamaha-YZF/ASC/on-off",1,"BOOL");
 
 ###########################################################################
 
 var loop = func {
 
-	# shoulder view helper
-	var cv = getprop("sim/current-view/view-number") or 0;
-	var apos = getprop("/devices/status/keyboard/event/key") or 0;
-	var press = getprop("/devices/status/keyboard/event/pressed") or 0;
-	var du = getprop("/controls/Yamaha-YZF/driver-up") or 0;
-	#helper turn shoulder to look back
-	if(cv == 0 and !du){
-		if(apos == 49 and press){
-			setprop("/sim/current-view/heading-offset-deg", 160);
-			setprop("/controls/Yamaha-YZF/driver-looks-back",1);
-		}else{
-			setprop("/sim/current-view/heading-offset-deg", 0);
-			setprop("/controls/Yamaha-YZF/driver-looks-back",0);
-		}
-	}
+	var msec = getprop("/gear/gear/rollspeed-ms") or 0;
+	var kmh = msec*3600/1000;
+	var gefahrenem = getprop("/instrumentation/Yamaha-YZF/distance-calculator/mzaehler") or 0;
+	var tagesm = getprop("/instrumentation/Yamaha-YZF/distance-calculator/dmzaehler") or 0;
+	gefahrenem = gefahrenem + msec/8*1.16;  # 0.125 sec * 8 / 1.16 correction value for the wheel dimension
+	tagesm = tagesm + msec/8*1.16;
+	setprop("/instrumentation/Yamaha-YZF/distance-calculator/mzaehler", gefahrenem);
+	setprop("/instrumentation/Yamaha-YZF/distance-calculator/dmzaehler", tagesm);
+	
+	#help_win.write(sprintf("Geschwindigkeit in m/s: %.2f Gesamt m: %.1f", kmh, gefahrenem));
 
-	# properties for ABS and SCS at the bottom of this script
+	# properties for ABS and ASC at the bottom of this script
 	var comp_m = getprop("/gear/gear[1]/compression-m") or 0;
 	var brake_ctrl_left = getprop("/controls/gear/brake-left") or 0;
 	var brake_ctrl_right = getprop("/controls/gear/brake-right") or 0;
@@ -71,7 +67,7 @@ var loop = func {
 		clutch.setValue(0);
 	}
 	
-	gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;	
+	gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
 	#gspeed = getprop("/velocities/groundspeed-kt") or 0;
 	var bwspeed = getprop("/gear/gear[1]/rollspeed-ms") or 0;
 	bwspeed = bwspeed*2.23694; # meter per secondes to miles per hour
@@ -113,7 +109,6 @@ var loop = func {
 	} else { 
 		gear.setValue(lastgear);
 	}
-
 	lastgear = gear.getValue();
 
 	# ----------- ENGINE IS RUNNING --------------
@@ -122,9 +117,11 @@ var loop = func {
 		# calculate the inertia
 		#inertia = (fuel_weight.getValue() + weight.getValue())/245; # 245 max. weight and fuel
 		
-		# overgspeed the engine
-		if(rpm.getValue() > (maxrpm - 700)){
-			killed.setValue(killed.getValue() + 1/maxhealth);
+		# overspeed the engine
+		if(rpm.getValue() > (maxrpm - 500)){
+			if(engine_rpm_regulation.getValue() < 1){
+				killed.setValue(killed.getValue() + 1/maxhealth);
+			}
 			if(killed.getValue() >= 1)rpm.setValue(40000);
 		}
 		if(killed.getValue() >= 1){
@@ -140,19 +137,19 @@ var loop = func {
 			vmax = 0;
 			fastcircuit.setValue(0);
 		} else if (gear.getValue() == 1) {
-			vmax = 50;
+			vmax = 70;
 			fastcircuit.setValue(0.1);
 		} else if (gear.getValue() == 2) {
-			vmax =  70;
+			vmax =  90;
 			fastcircuit.setValue(0.2);
 		} else if (gear.getValue() == 3) {
-			vmax = 100;
+			vmax = 110;
 			fastcircuit.setValue(0.3);
 		} else if (gear.getValue() == 4) {
-			vmax = 135;
+			vmax = 140;
 			fastcircuit.setValue(0.4);
 		} else if (gear.getValue() == 5) {
-			vmax = 174;
+			vmax = 170;
 			fastcircuit.setValue(0.5);
 		} else if (gear.getValue() == 6) {
 			vmax = 205;
@@ -165,17 +162,17 @@ var loop = func {
 			  transmissionpower = throttle.getValue()*2;
 			  setprop("/sim/weight[1]/weight-lb", throttle.getValue()*300);
 			}else if(fastcircuit.getValue() == 0.2){
-			  transmissionpower = 0.95*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  transmissionpower = 0.9*throttle.getValue()-propulsion.getValue()/maxrpm;
 			  setprop("/sim/weight[1]/weight-lb", throttle.getValue()*100);
 			}else if(fastcircuit.getValue() == 0.3){
-			  transmissionpower = 0.85*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  transmissionpower = 0.8*throttle.getValue()-propulsion.getValue()/maxrpm;
 			  setprop("/sim/weight[1]/weight-lb", 0);
 			}else if(fastcircuit.getValue() == 0.4){
-			  transmissionpower = 0.75*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  transmissionpower = 0.7*throttle.getValue()-propulsion.getValue()/maxrpm;
 			}else if(fastcircuit.getValue() == 0.5){
-			  transmissionpower = 0.62*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  transmissionpower = 0.6*throttle.getValue()-propulsion.getValue()/maxrpm;
 			}else{
-			  transmissionpower = 0.42*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  transmissionpower = 0.4*throttle.getValue()-propulsion.getValue()/maxrpm;
 			}
 			transmissionpower = transmissionpower * (1- killed.getValue());
 			propulsion.setValue(transmissionpower);
@@ -205,7 +202,7 @@ var loop = func {
 		if(speed > 5 and (lastthrottle > throttle.getValue() or throttle.getValue() <= 0) and clutch.getValue() == 0 and gear.getValue() > 0){ 
 			propulsion.setValue(0);
 			engine_brake.setValue(0.2);
-		}else if(gspeed > vmax or (speedlimiter.getValue() < speed and speedlimstate.getBoolValue() == 1)){
+		}else if(bwspeed > vmax or (speedlimiter.getValue() < speed and speedlimstate.getBoolValue() == 1)){
 			propulsion.setValue(0);
 			engine_brake.setValue(1);
 		}else{
@@ -213,24 +210,29 @@ var loop = func {
 		}
 		
 		# Automatic RPM overspeed regulation
-		if(engine_rpm_regulation.getValue() == 1 and rpm.getValue() > maxrpm-1500){
-			propulsion.setValue(0);
-			if (speed > 20) engine_brake.setValue(0.8);
-			rpm.setValue(maxrpm-1000);
-			setprop("/controls/Yamaha-YZF/ctrl-light-overspeed", 1);
+		if(rpm.getValue() > maxrpm-750){
+			if(engine_rpm_regulation.getValue() == 1 ){
+				propulsion.setValue(0);
+				if (speed > 20) engine_brake.setValue(0.8);
+				rpm.setValue(maxrpm-100);
+				setprop("/controls/Yamaha-YZF/ctrl-light-overspeed", 1);
+			}else{
+				setprop("/controls/Yamaha-YZF/ctrl-light-overspeed", 1);
+			}
+			
 		}else{
 			setprop("/controls/Yamaha-YZF/ctrl-light-overspeed", 0);
 		}
 
-		# Anti - slip regulation Yamaha called SCS
+		# Anti - slip regulation BMW called ASC
 		if(comp_m < 0.06 and brake_ctrl_right <= 0.5 and brake_ctrl_left <= 0.5 and gspeed > 70 and ascon.getValue() == 1){
 			propulsion.setValue(propulsion.getValue() + 0.25);
-			setprop("/controls/Yamaha-YZF/SCS/ctrl-light", 1);
+			setprop("/controls/Yamaha-YZF/ASC/ctrl-light", 1);
 		}else{
-			setprop("/controls/Yamaha-YZF/SCS/ctrl-light", 0);
+			setprop("/controls/Yamaha-YZF/ASC/ctrl-light", 0);
 		}
 		
-		#help_win.write(sprintf("Propulsion: %.2f", propulsion.getValue()));
+		#help_win.write(sprintf("Leistung (in PS): %.2f", propulsion.getValue()*273.85));
 
 	   	 if(rpm.getValue() < minrpm) rpm.setValue(minrpm);  # place after the rpm calculation
 	 
@@ -240,7 +242,7 @@ var loop = func {
 	   	 else {
 	   	  fuel_lev = fuel.getValue();
 		  setprop("/controls/fuel/remember-level", fuel.getValue()); # save it for restart
-	   	  fuel.setValue(fuel_lev - (throttle.getValue()+0.1)*0.00000162);
+	   	  fuel.setValue(fuel_lev - (throttle.getValue()+0.1)*0.0000016);
 	   	 }
 		
 		#-------------- ENGINE RUNNING END --------------------
@@ -254,9 +256,8 @@ var loop = func {
 	#-------------- ENGINE END --------------------
 	
 	# Anti - blog brake regulation
-	if(comp_m < 0.05 and brake_ctrl_right > 0.5 and brake_ctrl_left > 0.5 and gspeed > 50){
+	if(comp_m < 0.05 and brake_ctrl_right > 0.5 and brake_ctrl_left > 0.5 and gspeed > 70){
 		setprop("/controls/Yamaha-YZF/ABS/ctrl-light", 1);
-		setprop("/controls/Yamaha-YZF/ctrl-light-overspeed", 1);
 		setprop("/controls/Yamaha-YZF/ABS/brake-right", brake_ctrl_right*0.34);
 		setprop("/controls/Yamaha-YZF/ABS/brake-left", brake_ctrl_left*0.34);		
 	}else{

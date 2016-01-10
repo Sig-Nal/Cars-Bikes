@@ -238,8 +238,9 @@ and have fun!</text>
  			<int n="0" alias="/controls/Yamaha-YZF/newbie"/> <!-- animation red security pullover -->
  			<int n="1" alias="/Yamaha-YZF/race-lap"/> 	 <!-- mp result views -->
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
- 			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
- 			<int n="4" alias="/controls/Yamaha-YZF/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
+			<int n="4" alias="/controls/Yamaha-YZF/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="5" alias="/controls/Yamaha-YZF/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
 		 </generic>
 	</multiplay>
 
@@ -310,13 +311,10 @@ and have fun!</text>
 		<path>/controls/flight/select-throttle-input</path>
 		<path>/controls/Yamaha-YZF/old-mens-mode</path>
 		<path>/controls/hang-off-speed</path>
+		<path>/instrumentation/Yamaha-YZF/distance-calculator/mzaehler</path>
 		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
-	<current-view>
-		<x-offset-m>0</x-offset-m>
-		<y-offset-m>0</y-offset-m>
-		<z-offset-m>0</z-offset-m> 
-	</current-view>
+	
  </sim>
  
  <!--ENGINES-->
@@ -969,6 +967,7 @@ and have fun!</text>
 		<fuel>
 			<remember-level type="float">0.0</remember-level>
 		</fuel>
+		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>
@@ -980,6 +979,12 @@ and have fun!</text>
 				<speed-limiter-switch type="bool">0</speed-limiter-switch>
 				<selection type="int">0</selection>
 			</speed-indicator>
+			<distance-calculator>
+				<mzaehler type="float">0.0</mzaehler>
+				<dmzaehler type="float">0.0</dmzaehler>
+				<miles type="float">0.0</miles>
+				<dmiles type="float">0.0</dmiles>
+			</distance-calculator>
 		</Yamaha-YZF>
 		<transponder>
 			<id-code type="int">26</id-code>

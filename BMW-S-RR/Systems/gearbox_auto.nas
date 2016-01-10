@@ -6,10 +6,11 @@
 
 var fuel = props.globals.getNode("consumables/fuel/tank/level-m3");
 var fuel_lev = 0;
-var fuel_weight = props.globals.getNode("consumables/fuel/total-fuel-lbs"); # max 14.9lbs
+var fuel_weight = props.globals.getNode("consumables/fuel/total-fuel-lbs"); # max 31lbs
 var running = props.globals.getNode("/engines/engine/running");
 var gear = props.globals.getNode("/engines/engine/gear");
-var gearsound = props.globals.getNode("/engines/engine/gear-sound");
+var gearsound = props.globals.initNode("/engines/engine/gear-sound",0,"DOUBLE");
+var fastcircuit = props.globals.getNode("/controls/flight/flaps");
 var clutch = props.globals.getNode("/engines/engine/clutch");
 var secclutchcontrol = props.globals.getNode("/devices/status/keyboard/ctrl");
 var killed = props.globals.getNode("/engines/engine/killed");
@@ -18,43 +19,43 @@ var propulsion = props.globals.getNode("/engines/engine/propulsion");
 var throttle = props.globals.getNode("/controls/flight/throttle-on-elev-axis");
 var lastthrottle = 0;
 var lastgear = 0;
-var lastrpm = 0;
+var lastfastcircuit = 0;
 var engine_brake = props.globals.getNode("/engines/engine[0]/brake-engine");
 var engine_rpm_regulation = props.globals.getNode("/engines/engine[0]/rpm_regulation");
 var weight = props.globals.getNode("/sim/weight/weight-lb"); # max. 230 lbs
 var inertia = 0;
 var vmax = 0;
 var looptime = 0.1;
-var minrpm = 2200;
-var maxrpm = 18500;
+var lastrpm = 0;
+var transmissionpower = 0;
+var minrpm = 2100;
+var maxrpm = 19500;
+var newrpm = 0;
 var clutchrpm = 0;
 var maxhealth = 60; # for the engine killing, higher is longer live while overspeed rpm
 var speedlimiter = props.globals.getNode("/instrumentation/BMW-S-RR/speed-indicator/speed-limiter");
 var speedlimstate = props.globals.getNode("/instrumentation/BMW-S-RR/speed-indicator/speed-limiter-switch");
 var speed = 0;
 var gspeed = 0;
+var ascon = props.globals.initNode("/controls/BMW-S-RR/ASC/on-off",1,"BOOL");
 
 ###########################################################################
 
 var loop = func {
 
-	# shoulder view helper
-	var cv = getprop("/sim/current-view/view-number") or 0;
-	var apos = getprop("/devices/status/keyboard/event/key") or 0;
-	var press = getprop("/devices/status/keyboard/event/pressed") or 0;
-	var du = getprop("/controls/BMW-S-RR/driver-up") or 0;
-	#helper turn shoulder to look back
-	if(cv == 0 and !du){
-		if(apos == 49 and press){
-			setprop("/sim/current-view/heading-offset-deg", 160);
-			setprop("/controls/BMW-S-RR/driver-looks-back",1);
-		}else{
-			setprop("/sim/current-view/heading-offset-deg", 0);
-			setprop("/controls/BMW-S-RR/driver-looks-back",0);
-		}
-	}
-	var comp_m_f = getprop("/gear/gear[0]/compression-m") or 0;
-	var comp_m_r = getprop("/gear/gear[1]/compression-m") or 0;
+	var msec = getprop("/gear/gear/rollspeed-ms") or 0;
+	var kmh = msec*3600/1000;
+	var gefahrenem = getprop("/instrumentation/BMW-S-RR/distance-calculator/mzaehler") or 0;
+	var tagesm = getprop("/instrumentation/BMW-S-RR/distance-calculator/dmzaehler") or 0;
+	gefahrenem = gefahrenem + msec/8*1.16;  # 0.125 sec * 8 / 1.16 correction value for the wheel dimension
+	tagesm = tagesm + msec/8*1.16;
+	setprop("/instrumentation/BMW-S-RR/distance-calculator/mzaehler", gefahrenem);
+	setprop("/instrumentation/BMW-S-RR/distance-calculator/dmzaehler", tagesm);
+	
+	#help_win.write(sprintf("Geschwindigkeit in m/s: %.2f Gesamt m: %.1f", kmh, gefahrenem));
+
+	# properties for ABS and ASC at the bottom of this script
+	var comp_m = getprop("/gear/gear[1]/compression-m") or 0;
 	var brake_ctrl_left = getprop("/controls/gear/brake-left") or 0;
 	var brake_ctrl_right = getprop("/controls/gear/brake-right") or 0;
 	var brake_park = getprop("/controls/gear/brake-parking") or 0;
@@ -67,7 +68,7 @@ var loop = func {
 	}
 	
 	gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
-	speed = getprop("/instrumentation/BMW-S-RR/speed-indicator/speed-meter");
+	#gspeed = getprop("/velocities/groundspeed-kt") or 0;
 	var bwspeed = getprop("/gear/gear[1]/rollspeed-ms") or 0;
 	bwspeed = bwspeed*2.23694; # meter per secondes to miles per hour
 
@@ -125,67 +126,88 @@ var loop = func {
 			rpm.setValue((maxrpm+1000)/vmax*gspeed);
 
 		} else {
-			rpm.setValue(throttle.getValue()*(maxrpm+2000));
+			rpm.setValue(throttle.getValue()*(maxrpm+2700));
 			propulsion.setValue(0);
 		}
 		
+		# brake engine feeling at decrease throttle
 		if(rpm.getValue() > 2000 and clutch.getValue() == 1){
 			clutchrpm = lastrpm + 1000;
 			rpm.setValue(clutchrpm);
 		}
 		
-		# brake engine feeling at decrease throttle
-		if(speed > 5 and lastthrottle > throttle.getValue() and clutch.getValue() == 0 and gear.getValue() > 0){ 
+		speed = getprop("/instrumentation/BMW-S-RR/speed-indicator/speed-meter");
+		
+		if(speed > 5 and (lastthrottle > throttle.getValue() or throttle.getValue() <= 0) and clutch.getValue() == 0 and gear.getValue() > 0){ 
 			propulsion.setValue(0);
-			engine_brake.setValue(0.6);
-		}else if(gspeed > vmax or (speedlimiter.getValue() < speed and speedlimstate.getBoolValue() == 1)){
+			engine_brake.setValue(0.2);
+		}else if(bwspeed > vmax or (speedlimiter.getValue() < speed and speedlimstate.getBoolValue() == 1)){
 			propulsion.setValue(0);
 			engine_brake.setValue(1);
 		}else{
 			engine_brake.setValue(0);
 		}
-
+		
 		# Automatic RPM overspeed regulation
-		if(engine_rpm_regulation.getValue() == 1 and rpm.getValue() > maxrpm-500){
-			propulsion.setValue(0);
-			if (speed > 20) engine_brake.setValue(0.8);
-			rpm.setValue(maxrpm-800);
+		if(rpm.getValue() > maxrpm-750){
+			if(engine_rpm_regulation.getValue() == 1 ){
+				propulsion.setValue(0);
+				if (speed > 20) engine_brake.setValue(0.8);
+				rpm.setValue(maxrpm-100);
+				setprop("/controls/BMW-S-RR/ctrl-light-overspeed", 1);
+			}else{
+				setprop("/controls/BMW-S-RR/ctrl-light-overspeed", 1);
+			}
+			
+		}else{
+			setprop("/controls/BMW-S-RR/ctrl-light-overspeed", 0);
+		}
+
+		# Anti - slip regulation BMW called ASC
+		if(comp_m < 0.06 and brake_ctrl_right <= 0.5 and brake_ctrl_left <= 0.5 and gspeed > 70 and ascon.getValue() == 1){
+			propulsion.setValue(propulsion.getValue() + 0.25);
+			setprop("/controls/BMW-S-RR/ASC/ctrl-light", 1);
+		}else{
+			setprop("/controls/BMW-S-RR/ASC/ctrl-light", 0);
 		}
 		
-		# Anti - slip regulation ASR
-		if(comp_m_f < 0.06 or comp_m_r < 0.06 and brake_ctrl_right <= 0.5 and brake_ctrl_left <= 0.5){
-			propulsion.setValue(propulsion.getValue() + 0.06);
-			setprop("/controls/BMW-S-RR/ASR/ctrl-light", 1);
-		}else{
-			setprop("/controls/BMW-S-RR/ASR/ctrl-light", 0);
-		}
-
-		#help_win.write(sprintf("Propulsion: %.2f", propulsion.getValue()));
+		#help_win.write(sprintf("Leistung (in PS): %.2f", propulsion.getValue()*273.85));
 
 	   	 if(rpm.getValue() < minrpm) rpm.setValue(minrpm);  # place after the rpm calculation
 	 
-	   	 if (fuel.getValue() < 0.0000015) {
+	   	 if (fuel.getValue() < 0.000002) {
 	   	  running.setValue(0);
 	   	  }
 	   	 else {
 	   	  fuel_lev = fuel.getValue();
-	   	  fuel.setValue(fuel_lev - (0.5*throttle.getValue()+0.3)*0.0000015);  # +0.1 consumption on idle rpm
+		  setprop("/controls/fuel/remember-level", fuel.getValue()); # save it for restart
+	   	  fuel.setValue(fuel_lev - (throttle.getValue()+0.1)*0.0000016);
 	   	 }
-		 
-		 #-------------- ENGINE RUNNING END --------------------
+		
+		#-------------- ENGINE RUNNING END --------------------
+		
+	} else{
+	  if(rpm.getValue() > 2000){
+	  	interpolate("/engines/engine/rpm" , 0, 3);
+	  }
+	  propulsion.setValue(0);
+	}
+	#-------------- ENGINE END --------------------
+	
+	# Anti - blog brake regulation
+	if(comp_m < 0.05 and brake_ctrl_right > 0.5 and brake_ctrl_left > 0.5 and gspeed > 70){
+		setprop("/controls/BMW-S-RR/ABS/ctrl-light", 1);
+		setprop("/controls/BMW-S-RR/ABS/brake-right", brake_ctrl_right*0.34);
+		setprop("/controls/BMW-S-RR/ABS/brake-left", brake_ctrl_left*0.34);		
 	}else{
-	  	if(rpm.getValue() > 2000){
-	  		interpolate("/engines/engine/rpm" , 0, 3);
-	  	}
-
-		propulsion.setValue(0);
-
-	}#-------------- ENGINE NOT RUNNING END --------------------
-
-	#print(engine_brake.getValue());
-
+		setprop("/controls/BMW-S-RR/ABS/ctrl-light", 0);
+		setprop("/controls/BMW-S-RR/ABS/brake-right", brake_ctrl_right);
+		setprop("/controls/BMW-S-RR/ABS/brake-left", brake_ctrl_left);
+	}
+	
 	lastthrottle = throttle.getValue();
 	lastrpm = rpm.getValue();
+	lastfastcircuit = fastcircuit.getValue();
 	settimer (loop, 0.125);
 }
 
