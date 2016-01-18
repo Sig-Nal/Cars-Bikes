@@ -238,10 +238,9 @@ and have fun!</text>
 		<int n="0" alias="/controls/Suzuki-GSX-R/newbie"/> <!-- animation red security pullover -->
 		<int n="1" alias="/Suzuki-GSX-R/race-lap"/> 	 <!-- mp result views -->
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
-			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
-			<int n="4" alias="/controls/Suzuki-GSX-R/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
- 			<int n="5" alias="/controls/Suzuki-GSX-R/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
-		 </generic>
+		<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
+		<int n="4" alias="/controls/Suzuki-GSX-R/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+	 </generic>
 	</multiplay>
 
     <weight n="0">
@@ -250,23 +249,6 @@ and have fun!</text>
       <max-lb>230</max-lb>
       <min-lb>140</min-lb>
     </weight>
-
-    <weight n="1">
-      <name>Backwheel</name>
-      <weight-lb>0</weight-lb>
-      <max-lb>300</max-lb>
-      <min-lb>0</min-lb>
-    </weight>
-			
-	<flaps>
-	 <setting>0.6</setting>
-	 <setting>0.5</setting> 
-	 <setting>0.4</setting> 
-	 <setting>0.3</setting> 
-	 <setting>0.2</setting> 
-	 <setting>0.1</setting> 
-	 <setting>0.0</setting> 
-	</flaps>
 		
 	<aircraft-data>
 		<path>/Suzuki-GSX-R/TT/fastest-lap</path>
@@ -310,7 +292,6 @@ and have fun!</text>
 		<path>/Suzuki-GSX-R/CT/sector[2]/fastest-time</path>
 		<path>/controls/flight/select-throttle-input</path>
 		<path>/controls/Suzuki-GSX-R/old-mens-mode</path>
-		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
 	
  </sim>
@@ -961,10 +942,6 @@ and have fun!</text>
   		  <throttle-on-elev-axis type="float">0.0</throttle-on-elev-axis>
 		  <flaps>0.0</flaps> <!-- helper for the fastcircuit -->
 		</flight>
-		<fuel>
-			<remember-level type="float">0.0</remember-level>
-		</fuel>
-		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>

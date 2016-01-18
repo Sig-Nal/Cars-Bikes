@@ -94,11 +94,11 @@
 
   <help>
 		    <key>
-		      <name>Home or ></name>
+		      <name>Home</name>
 		      <desc>Shift up</desc>
 		    </key>
 		    <key>
-		      <name>End or Shift + ></name>
+		      <name>End</name>
 		      <desc>Shift down</desc>
 		    </key>
 		    <key>
@@ -136,6 +136,22 @@
 			<key>
 			  <name>F9</name>
 			  <desc>Open fuel menu</desc>
+			</key>
+			<key>
+			  <name>e</name>
+			  <desc>Up no Clutch</desc>
+			</key>
+			<key>
+			  <name>f</name>
+			  <desc>Down no Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-f</name>
+			  <desc>Up with Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-d</name>
+			  <desc>Down with Clutch</desc>
 			</key>
 		<text>*** ISLE OF MAN EDITION ***
 "Ladies and Gentleman, start your engines"
@@ -252,6 +268,7 @@ and have fun!</text>
  			<int n="2" alias="/controls/flag-info"/>  <!-- for the livetiming roadracer script -->
  			<int n="3" alias="/sim/crashed"/>  <!-- no driver if crashed -->
  			<int n="4" alias="/controls/Yamaha-YZF/driver-looks-back"/>  <!-- driver looks back over his shoulder -->
+ 			<int n="5" alias="/controls/Yamaha-YZF/driver-looks-back-right"/>  <!-- driver looks back over his shoulder -->
 		 </generic>
 	</multiplay>
 
@@ -322,6 +339,7 @@ and have fun!</text>
 		<path>/controls/flight/select-throttle-input</path>
 		<path>/controls/Yamaha-YZF/old-mens-mode</path>
 		<path>/controls/hang-off-speed</path>
+		<path>/instrumentation/Yamaha-YZF/distance-calculator/mzaehler</path>
 		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
 	<current-view>
@@ -981,6 +999,7 @@ and have fun!</text>
 		<fuel>
 			<remember-level type="float">0.0</remember-level>
 		</fuel>
+		<waiting type="int">1</waiting>
 	</controls>
  
 	<instrumentation>
@@ -992,6 +1011,12 @@ and have fun!</text>
 				<speed-limiter-switch type="bool">0</speed-limiter-switch>
 				<selection type="int">0</selection>
 			</speed-indicator>
+			<distance-calculator>
+				<mzaehler type="float">0.0</mzaehler>
+				<dmzaehler type="float">0.0</dmzaehler>
+				<miles type="float">0.0</miles>
+				<dmiles type="float">0.0</dmiles>
+			</distance-calculator>
 		</Yamaha-YZF>
 		<transponder>
 			<id-code type="int">26</id-code>
@@ -1048,8 +1073,8 @@ and have fun!</text>
           <max type="double">6</max>
 	   </binding>
         </key>
-        <key n="60"> 
-         <name>></name>
+        <key n="6"> 
+         <name>Ctrl-f</name>
          <desc>Shift Up Alternative</desc>
          <binding>
           <command>property-adjust</command>
@@ -1059,8 +1084,8 @@ and have fun!</text>
           <max type="double">6</max>
 	   </binding>
         </key>
-        <key n="62"> 
-          <name>Shift + ></name>
+        <key n="4"> 
+          <name>Ctrl-d</name>
           <desc>Shift Down Alternative</desc>
          <binding>
           <command>property-adjust</command>
@@ -1070,6 +1095,48 @@ and have fun!</text>
           <max type="double">6</max>
 	   </binding>
         </key>
+
+      <key n="101">
+      <name>e</name>
+      <desc>Shift Up NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(-1);
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);       
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+   <key n="102">
+      <name>f</name>
+      <desc>Shift Down NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(1);         
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+
 		<key n="8"> 
          <name>Backspace</name>
          <desc>Clutch</desc>
@@ -1119,7 +1186,8 @@ and have fun!</text>
 		   <value>0</value>
           </binding>
 		 </mod-up>
-		</key>		
+		</key>
+		
 		<!-- Clutch with Ctrl find setlistener in gearbox.nas -->	
 		<key n="263">
 			<name>F7</name>

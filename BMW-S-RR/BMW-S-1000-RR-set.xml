@@ -94,11 +94,11 @@
 
   <help>
 		    <key>
-		      <name>Home or ></name>
+		      <name>Home</name>
 		      <desc>Shift up</desc>
 		    </key>
 		    <key>
-		      <name>End or Shift + ></name>
+		      <name>End</name>
 		      <desc>Shift down</desc>
 		    </key>
 		    <key>
@@ -136,6 +136,22 @@
 			<key>
 			  <name>F9</name>
 			  <desc>Open fuel menu</desc>
+			</key>
+			<key>
+			  <name>e</name>
+			  <desc>Up no Clutch</desc>
+			</key>
+			<key>
+			  <name>f</name>
+			  <desc>Down no Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-f</name>
+			  <desc>Up with Clutch</desc>
+			</key>
+			<key>
+			  <name>Ctrl-d</name>
+			  <desc>Down with Clutch</desc>
 			</key>
 		<text>*** ISLE OF MAN EDITION ***
 "Ladies and Gentleman, start your engines"
@@ -1057,8 +1073,8 @@ and have fun!</text>
           <max type="double">6</max>
 	   </binding>
         </key>
-        <key n="60"> 
-         <name>></name>
+        <key n="6"> 
+         <name>Ctrl-f</name>
          <desc>Shift Up Alternative</desc>
          <binding>
           <command>property-adjust</command>
@@ -1068,8 +1084,8 @@ and have fun!</text>
           <max type="double">6</max>
 	   </binding>
         </key>
-        <key n="62"> 
-          <name>Shift + ></name>
+        <key n="4"> 
+          <name>Ctrl-d</name>
           <desc>Shift Down Alternative</desc>
          <binding>
           <command>property-adjust</command>
@@ -1079,6 +1095,48 @@ and have fun!</text>
           <max type="double">6</max>
 	   </binding>
         </key>
+
+      <key n="101">
+      <name>e</name>
+      <desc>Shift Up NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(-1);
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);       
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+   <key n="102">
+      <name>f</name>
+      <desc>Shift Down NoClutch</desc>
+      <repeatable type="bool">false</repeatable>
+      <binding>
+         <command>nasal</command>
+         <script>
+            controls.flapsDown(1);         
+         </script>
+      </binding>
+      <mod-up>
+         <binding>
+            <command>nasal</command>
+            <script>
+                controls.flapsDown(0);
+            </script>
+         </binding>
+      </mod-up>
+   </key>
+
+
 		<key n="8"> 
          <name>Backspace</name>
          <desc>Clutch</desc>
