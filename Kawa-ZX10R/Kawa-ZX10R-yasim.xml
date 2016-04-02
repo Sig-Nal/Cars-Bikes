@@ -83,7 +83,7 @@
           <control-input axis="/controls/gear/brake-parking" control="BRAKE"/> 
           <control-input axis="/controls/gear/brake-left" control="BRAKE"/>
           <control-input axis="/surface-positions/left-aileron-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-1.0" dst1="1.0"/>
-      	  <control-input axis="/surface-positions/rudder-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-0.9" dst1="0.9"/>
+      	  <control-input axis="/surface-positions/rudder-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-1.0" dst1="1.0"/>
     </gear>
 
   <!-- rearwheel -->
@@ -111,7 +111,7 @@
           <control-input axis="/engines/engine[0]/brake-engine" control="BRAKE"/> 
           <control-input axis="/controls/gear/brake-right" control="BRAKE"/> 
           <control-input axis="/surface-positions/left-aileron-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-1.0" dst1="1.0"/>
-       	<control-input axis="/surface-positions/rudder-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-0.9" dst1="0.9"/> 
+       	<control-input axis="/surface-positions/rudder-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-1.0" dst1="1.0"/> 
      </gear>
 
     <!-- support wheel right -->
@@ -125,7 +125,7 @@
           <control-input axis="/engines/engine[0]/brake-engine" control="BRAKE"/> 
           <control-input axis="/controls/gear/brake-right" control="BRAKE"/> 
           <control-input axis="/surface-positions/left-aileron-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-1.0" dst1="1.0"/>
-       	<control-input axis="/surface-positions/rudder-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-0.9" dst1="0.9"/>
+       	<control-input axis="/surface-positions/rudder-pos-norm" control="STEER" square="true" src0="-1.0" src1="1.0" dst0="-1.0" dst1="1.0"/>
      </gear>
 
   

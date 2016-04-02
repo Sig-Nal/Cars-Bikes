@@ -1,7 +1,7 @@
 ###############################################################################################
 #		Idea from DetlefF. and LesterB.
 #		written by Lake of Constance Hangar :: M.Kraus
-#		BMW S 1000 RR for Flightgear September 2014
+#		Honda-NSF 100 for Flightgear September 2014
 #		This file is licenced under the terms of the GNU General Public Licence V2 or later
 ############################################################################################### 
 
@@ -174,23 +174,27 @@ var loop = func {
 			transmissionpower = transmissionpower * (1- killed.getValue());
 			propulsion.setValue(transmissionpower);
 			
-			newrpm = (bwspeed < 1 and throttle.getValue() > 0.1) ? throttle.getValue()*(maxrpm+250) : (maxrpm+250)/vmax*bwspeed;
-			if(lastgear == 0 and newrpm < lastrpm){
-			    newrpm = lastrpm;
-				#help_win.write(sprintf("lastrpm: %.2f newrpm: %.2f", lastrpm, rpm.getValue()));
-			}else if(newrpm < minrpm){
-				newrpm = minrpm;
+			if(bwspeed < 3 and gspeed < 30){
+				newrpm = throttle.getValue()*(maxrpm);
+				rpm.setValue(newrpm);
+			}else{
+				newrpm = (maxrpm+minrpm)/vmax*gspeed;
+				#newrpm = (newrpm < lastrpm) ? (lastrpm - newrpm)/2 + newrpm: newrpm;
+				newrpm = (newrpm < minrpm + 250) ? minrpm + 250 : newrpm;
+				interpolate("/engines/engine/rpm",newrpm,0.125);
 			}
-			rpm.setValue(newrpm);
 			
-			# killing engine with the wrong gear and backwheel on earth
-			if (gear.getValue() > 2 and bwspeed < 10 and comp_m > 0.2) {
+			#help_win.write(sprintf("%.2fmph", bwspeed));
+			
+			# killing engine with the wrong gear
+			if (gear.getValue() > 2 and gspeed < 4) {
 						running.setValue(0);
 						propulsion.setValue(0);
 			}
 
 		} else {
-			rpm.setValue(throttle.getValue()*(maxrpm+1400));
+			newrpm = (newrpm < minrpm) ? minrpm : throttle.getValue()*(maxrpm+minrpm);
+			rpm.setValue(newrpm);
 			propulsion.setValue(0);
 		}
 		

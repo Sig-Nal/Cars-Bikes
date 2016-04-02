@@ -338,8 +338,8 @@ and have fun!</text>
 		<path>/Honda-RC213V/CT/sector[2]/fastest-time</path>
 		<path>/controls/flight/select-throttle-input</path>
 		<path>/controls/Honda-RC213V/old-mens-mode</path>
-		<path>/controls/hang-off-speed</path>
 		<path>/instrumentation/Honda-RC213V/distance-calculator/mzaehler</path>
+		<path>/controls/hang-off-speed</path>
 		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
 	<current-view>

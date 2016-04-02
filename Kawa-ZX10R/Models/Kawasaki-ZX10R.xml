@@ -118,6 +118,18 @@
     <texture>88.png</texture>
   </animation>
 
+ <animation>
+    <type>material</type>
+    <object-name>kawagls03</object-name>
+    <condition>
+      <equals>
+        <property>sim/model/livery/file</property>
+        <value>110</value>
+      </equals>
+    </condition>
+    <texture>110.png</texture>
+  </animation>
+
   <animation>
     <type>material</type>
     <object-name>kawagls03</object-name>
@@ -140,18 +152,6 @@
       </equals>
     </condition>
     <texture>444.png</texture>
-  </animation>
-
-  <animation>
-    <type>material</type>
-    <object-name>kawagls03</object-name>
-    <condition>
-      <equals>
-        <property>sim/model/livery/file</property>
-        <value>orange-14</value>
-      </equals>
-    </condition>
-    <texture>14.png</texture>
   </animation>
   
 <effect>

@@ -84,21 +84,21 @@ var temp_fake_calc = func{
 
 temp_fake_calc();
 
-setlistener("/devices/status/mice/mouse/button", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[0]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(0);
+		controls.flapsDown(-1);
 	}
 },0,1);
 
-setlistener("/devices/status/mice/mouse/button[2]", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[1]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
-		controls.flapsDown(0);
+		controls.flapsDown(1);
 	}
 },0,1);
 
@@ -116,9 +116,16 @@ setlistener("/controls/flight/aileron", func (position){
 		}
 		
 	}else{
-		var np = math.round(position*position*position*100);
-		np = np/100;
-		interpolate("/controls/flight/aileron-manual", np,0.1);
+		var joyst = getprop("/input/joysticks/js/id") or '';
+		if(joyst == 'Arduino Leonardo'){
+			var np = math.round(position*100);
+			np = np/100;
+			interpolate("/controls/flight/aileron-manual", np,0.1);
+		}else{
+			var np = math.round(position*position*position*100);
+			np = np/100;
+			interpolate("/controls/flight/aileron-manual", np,0.1);
+		}
 	}
 });
 

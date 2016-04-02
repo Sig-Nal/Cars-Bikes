@@ -29,6 +29,7 @@ var vmax = 0;
 var looptime = 0.1;
 var minrpm = 2200;
 var maxrpm = 18500;
+var newrpm = 0;
 var clutchrpm = 0;
 var maxhealth = 60; # for the engine killing, higher is longer live while overspeed rpm
 var speedlimiter = props.globals.getNode("/instrumentation/Kawa-ZX10R/speed-indicator/speed-limiter");
@@ -175,8 +176,17 @@ var loop = func {
 			transmissionpower = transmissionpower * (1- killed.getValue());
 			propulsion.setValue(transmissionpower);
 			
-			newrpm = (gspeed < 20 and throttle.getValue() > 0.1) ? throttle.getValue()*(maxrpm+3500) : (maxrpm+1000)/vmax*gspeed;
-			rpm.setValue(newrpm);
+			if(bwspeed < 3 and gspeed < 30){
+				newrpm = throttle.getValue()*(maxrpm);
+				rpm.setValue(newrpm);
+			}else{
+				newrpm = (maxrpm+minrpm)/vmax*gspeed;
+				#newrpm = (newrpm < lastrpm) ? (lastrpm - newrpm)/2 + newrpm: newrpm;
+				newrpm = (newrpm < minrpm + 1000) ? minrpm + 1000 : newrpm;
+				interpolate("/engines/engine/rpm",newrpm,0.125);
+			}
+			
+			#help_win.write(sprintf("%.2fmph", bwspeed));
 			
 			# killing engine with the wrong gear
 			if (gear.getValue() > 2 and gspeed < 4) {
@@ -185,7 +195,8 @@ var loop = func {
 			}
 
 		} else {
-			rpm.setValue(throttle.getValue()*(maxrpm+2700));
+			newrpm = (newrpm < minrpm) ? minrpm : throttle.getValue()*(maxrpm+minrpm);
+			rpm.setValue(newrpm);
 			propulsion.setValue(0);
 		}
 		

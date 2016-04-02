@@ -45,7 +45,7 @@
 			 </limits>
 			  <!-- x/y/z == right/up/back -->
 				<x-offset-m archive="y" type="double">0.0</x-offset-m>
-				<y-offset-m archive="y" type="double">2.23</y-offset-m>  <!-- up-down -->
+				<y-offset-m archive="y" type="double">2.19</y-offset-m>  <!-- up-down -->
 				<z-offset-m archive="y" type="double">-0.13</z-offset-m> <!-- fore-back -->
 				<pitch-offset-deg>-6</pitch-offset-deg>
 				<default-field-of-view-deg type="double">72</default-field-of-view-deg>
@@ -342,11 +342,7 @@ and have fun!</text>
 		<path>/instrumentation/Kawa-ZX10R/distance-calculator/mzaehler</path>
 		<path>/controls/fuel/remember-level</path>
 	</aircraft-data> 
-	<current-view>
-		<x-offset-m>0</x-offset-m>
-		<y-offset-m>0</y-offset-m>
-		<z-offset-m>0</z-offset-m> 
-	</current-view>
+	
  </sim>
  
  <!--ENGINES-->
