@@ -201,6 +201,38 @@
   	  <group>
   	    <layout>hbox</layout>
   	    <text>
+  	      <label>Qatar - Losail Circuit (OTBK) .........................................................</label>
+  	      <halign>left</halign>
+  	    </text>
+  	    <input>
+  	      <property>/Honda-NSF/QA/race-laps</property>
+  	      <type>INTEGER</type>
+  	    </input>
+  	    <text>
+  	      <label>laps</label>
+  	      <halign>right</halign>
+  	    </text>
+  	  </group>	
+
+  	  <group>
+  	    <layout>hbox</layout>
+  	    <text>
+  	      <label>Argentina - Termas de Rio Hondo (SANR) .................................</label>
+  	      <halign>left</halign>
+  	    </text>
+  	    <input>
+  	      <property>/Honda-NSF/TE/race-laps</property>
+  	      <type>INTEGER</type>
+  	    </input>
+  	    <text>
+  	      <label>laps</label>
+  	      <halign>right</halign>
+  	    </text>
+  	  </group>	
+	  	  
+  	  <group>
+  	    <layout>hbox</layout>
+  	    <text>
   	      <label>Bopfingen - Germany (EDPA) .........................................................</label>
   	      <halign>left</halign>
   	    </text>
@@ -214,7 +246,7 @@
   	    </text>
   	  </group>	  
 	  	  
-	  <hrule/>
+	  <hrule/> 
 
   	  <group>
   	    <layout>hbox</layout>

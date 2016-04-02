@@ -68,19 +68,29 @@ var forkcontrol = func{
 			setprop("/controls/Honda-NSF/driver-looks-back-right",1);
 		}else{
 			var hdgpos = 0;
-		    var posi = getprop("/controls/flight/aileron-manual") or 0;
+		    var posi = getprop("/controls/flight/aileron-manual") or 0;			
+			var sceneryposi = posi*45;
+			if(sceneryposi > 0){
+				sceneryposi = (sceneryposi > 18) ? 18 : sceneryposi;
+			}else{
+				sceneryposi = (sceneryposi < -18) ? -18 : sceneryposi;
+			}
 		  	if(posi > 0.0001 and getprop("/controls/hangoff") == 1){
 				hdgpos = 360 - 60*posi;
-				hdgpos = (hdgpos < 340) ? 340 : hdgpos;
+				hdgpos = (hdgpos < 332) ? 332 : hdgpos;
 		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+				setprop("/sim/current-view/goal-roll-offset-deg", sceneryposi);
 		  	}else if (posi < -0.0001 and getprop("/controls/hangoff") == 1){
 				hdgpos = 60*abs(posi);
-				hdgpos = (hdgpos > 20) ? 20 : hdgpos;
+				hdgpos = (hdgpos > 28) ? 28 : hdgpos;
 		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+				setprop("/sim/current-view/goal-roll-offset-deg", sceneryposi);
 			}else if (posi > 0 and posi < 0.0001 and getprop("/controls/hangoff") == 1){
 				setprop("/sim/current-view/goal-heading-offset-deg", 360);
+				setprop("/sim/current-view/goal-roll-offset-deg", 0);
 			}else{
 				setprop("/sim/current-view/goal-heading-offset-deg", 0);
+				setprop("/sim/current-view/goal-roll-offset-deg", 0);
 			}
 			setprop("/controls/Honda-NSF/driver-looks-back",0);
 			setprop("/controls/Honda-NSF/driver-looks-back-right",0);
@@ -101,7 +111,7 @@ var forkcontrol = func{
 
 forkcontrol();
 
-setlistener("/devices/status/mice/mouse[0]/button[0]", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[3]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
@@ -110,7 +120,7 @@ setlistener("/devices/status/mice/mouse[0]/button[0]", func (state){
 	}
 },0,1);
 
-setlistener("/devices/status/mice/mouse[0]/button[1]", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[4]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;

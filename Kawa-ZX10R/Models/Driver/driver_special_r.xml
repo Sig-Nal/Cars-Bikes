@@ -22,7 +22,32 @@
   </animation>
   
   <nopreview/>
-  
+
+  <animation>
+    <type>material</type>
+    <object-name>tete</object-name>
+    <object-name>corps</object-name>
+    <object-name>helm</object-name>
+  	<object-name>hair</object-name>
+    <object-name>brasG</object-name>
+    <object-name>brasD</object-name>
+    <object-name>avantbrasG</object-name>
+    <object-name>avantbrasD</object-name>
+    <object-name>cuisseG</object-name>
+    <object-name>cuisseD</object-name>
+    <object-name>jambeG</object-name>
+    <object-name>jambeD</object-name>
+    <object-name>piedG</object-name>
+    <object-name>piedD</object-name>
+    <condition>
+      <equals>
+        <property>sim/model/livery/file</property>
+        <value>110</value>
+      </equals>
+    </condition>
+    <texture>driver-110.png</texture>
+  </animation>
+    
   <animation>
     <type>material</type>
     <object-name>tete</object-name>

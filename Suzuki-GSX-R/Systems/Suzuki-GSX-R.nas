@@ -49,23 +49,23 @@ var forkcontrol = func{
 
 forkcontrol();
 
-setlistener("/devices/status/mice/mouse/button", func (state){
-    var state = state.getBoolValue();
-	# helper for the steering
-	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
-	if (ms == 1 and state == 1) {
-		controls.flapsDown(1);
-	}
-});
-
-setlistener("/devices/status/mice/mouse/button[2]", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[3]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
 	if (ms == 1 and state == 1) {
 		controls.flapsDown(-1);
 	}
-});
+},0,1);
+
+setlistener("/devices/status/mice/mouse[0]/button[4]", func (state){
+    var state = state.getBoolValue();
+	# helper for the steering
+	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
+	if (ms == 1 and state == 1) {
+		controls.flapsDown(1);
+	}
+},0,1);
 
 setlistener("/surface-positions/left-aileron-pos-norm", func (position){
 
@@ -97,9 +97,16 @@ setlistener("/controls/flight/aileron", func (position){
 		}
 		
 	}else{
-		var np = math.round(position*position*position*100);
-		np = np/100;
-		interpolate("/controls/flight/aileron-manual", np,0.1);
+		var joyst = getprop("/input/joysticks/js/id") or '';
+		if(joyst == 'Arduino Leonardo'){
+			var np = math.round(position*100);
+			np = np/100;
+			interpolate("/controls/flight/aileron-manual", np,0.1);
+		}else{
+			var np = math.round(position*position*position*100);
+			np = np/100;
+			interpolate("/controls/flight/aileron-manual", np,0.1);
+		}
 	}
 });
 
@@ -137,14 +144,16 @@ setlistener("/controls/engines/engine[0]/throttle", func (position){
 setlistener("/instrumentation/airspeed-indicator/indicated-speed-kt", func (speed){
 	var groundspeed = getprop("/velocities/groundspeed-kt") or 0;
     var speed = speed.getValue();
+    # only for manipulate the reset m function 
+	if (speed > 10) setprop("/controls/waiting", 1);
 	if(getprop("/instrumentation/Suzuki-GSX-R/speed-indicator/selection")){
-		if(speed > 0.1){
+		if(groundspeed > 0.1){
 			setprop("/instrumentation/Suzuki-GSX-R/speed-indicator/speed-meter", speed*1.15077945); # mph
 		}else{
 			setprop("/instrumentation/Suzuki-GSX-R/speed-indicator/speed-meter", 0);
 		}
 	}else{
-		if(speed > 0.1){
+		if(groundspeed > 0.1){
 			setprop("/instrumentation/Suzuki-GSX-R/speed-indicator/speed-meter", speed*1.852); # km/h
 		}else{
 			setprop("/instrumentation/Suzuki-GSX-R/speed-indicator/speed-meter", 0);

@@ -28,6 +28,8 @@
 
   <animation>
     <type>material</type>
+    <object-name>oehlinssup</object-name>
+    <object-name>oehlinssup.001</object-name>
     <object-name>carrd</object-name>
     <object-name>carrd01</object-name>
     <object-name>carrd03</object-name>
@@ -129,9 +131,9 @@
 	<name>COMBI</name>
     <path>Aircraft/Honda-CBR/Models/Instruments/combi/combi.xml</path>
     <offsets>
-       <x-m> -0.705 </x-m>  <!--  Ori : -0.70 -->
+       <x-m> -0.70 </x-m>
        <y-m>-0.01 </y-m>
-       <z-m> 0.935 </z-m>  <!--  Ori : -0.92 -->
+       <z-m> 0.92 </z-m>
       <pitch-deg> -50 </pitch-deg>
     </offsets>
   </model>
@@ -158,6 +160,12 @@
 	        <value>martin</value>
 	      </equals>
       </not>
+      <not>
+	      <equals>
+	        <property>sim/model/livery/file</property>
+	        <value>mcguinness</value>
+	      </equals>
+      </not>
     </condition>
 </animation>
 
@@ -165,10 +173,16 @@
 	<type>select</type>
 	<object-name>TACHO</object-name>
     <condition>
+		<or>
       <equals>
         <property>sim/model/livery/file</property>
         <value>martin</value>
       </equals>
+      <equals>
+        <property>sim/model/livery/file</property>
+        <value>mcguinness</value>
+      </equals>
+  </or>
     </condition>
 </animation> 
 
@@ -211,7 +225,17 @@
 		</equals>		
 	 </or>
     </condition>
-  </animation>
+  </animation>  
+  
+  <model>
+	<name>OEHLINS</name>
+    <path>Aircraft/Honda-CBR/Models/Instruments/oehlins/oehlins.xml</path>
+    <offsets>
+        <x-m> -0.46 </x-m>
+        <y-m> 0.0</y-m>
+        <z-m> 0.915 </z-m>
+    </offsets>
+  </model>
 
   <model>
 	<name>SMOKE</name>
@@ -254,6 +278,27 @@
       </greater-than>
     </condition>
   </animation>
+  
+  <model>
+	<name>REARLIGHT</name>
+    <path>Aircraft/Honda-CBR/Models/Lights/rearlight.xml</path>
+    <offsets>
+      <x-m>0.77 </x-m>
+      <y-m>  0.0 </y-m>
+      <z-m>0.85 </z-m>
+    </offsets>
+  </model>
+  
+<animation>
+  <type>select</type>
+  <object-name>REARLIGHT</object-name>
+  <condition>
+	<greater-than>
+ 		<property>/sim/time/sun-angle-rad</property>
+		<value>1.4</value>
+	</greater-than>
+ </condition>
+</animation>
    
   <!-- Driver -->
   	<model>
@@ -317,6 +362,10 @@
       <object-name>TACHO</object-name>
       <object-name>SL</object-name>
       <object-name>TRANSPONDER</object-name>
+      <object-name>REARLIGHT</object-name>
+      <object-name>OEHLINS</object-name>
+      <object-name>oehlinssup</object-name>
+      <object-name>oehlinssup.001</object-name>
       <object-name>Driver</object-name>
   	  <object-name>Driver_quick_glance_over_shoulder</object-name>
   	  <object-name>Driver_quick_glance_over_shoulder_right</object-name>
@@ -392,6 +441,10 @@
       <object-name>TACHO</object-name>
       <object-name>SL</object-name>
       <object-name>TRANSPONDER</object-name>
+	  <object-name>REARLIGHT</object-name>
+      <object-name>OEHLINS</object-name>
+      <object-name>oehlinssup</object-name>
+      <object-name>oehlinssup.001</object-name>
       <object-name>Driver</object-name>
   	  <object-name>Driver_quick_glance_over_shoulder</object-name>
   	  <object-name>Driver_quick_glance_over_shoulder_right</object-name>
@@ -463,6 +516,8 @@
     <animation>
   	  <type>rotate</type>
         <object-name>SL</object-name>
+        <object-name>OEHLINS</object-name>
+        <object-name>oehlinssup.001</object-name>
         <object-name>carrd05</object-name>
         <object-name>carrd06</object-name>
         <object-name>carrd07</object-name>

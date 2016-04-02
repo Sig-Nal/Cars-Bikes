@@ -23,6 +23,7 @@
 	<animation>
 		 <type>material</type>
 		 <object-name>overspeedlight</object-name>
+		 <object-name>overspeedlight.001</object-name>
 		 <emission>
 		  <red>1</red>
 		  <green>0</green>
@@ -33,9 +34,20 @@
 	
     <animation>
       <type>select</type>
-		 <object-name>overspeedlight</object-name>
+		 <object-name>overspeedlight.001</object-name>
       <condition>
           <property>controls/Honda-NSF/ctrl-light-overspeed</property>
+      </condition>
+    </animation>
+	
+    <animation>
+      <type>select</type>
+		 <object-name>overspeedlight</object-name>
+      <condition>
+  		<greater-than>
+          <property>engines/engine/rpm</property>
+  			<value>13800</value>
+  		</greater-than>
       </condition>
     </animation>
 	
@@ -101,7 +113,7 @@
 	<animation>
 	  <type>rotate</type>
 	  <object-name>RPM.Needle</object-name>
-	  <property>/engines/engine/rpm</property>
+	  <property>engines/engine/rpm</property>
 	  <interpolation>
 	    <entry><ind>  0</ind><dep>    	0</dep></entry>
 		<entry><ind> 3000</ind><dep>    0</dep></entry>

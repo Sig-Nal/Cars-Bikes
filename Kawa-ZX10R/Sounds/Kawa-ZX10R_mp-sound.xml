@@ -11,7 +11,7 @@
  
   <engine>
         <name>engineidle</name>
-        <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine.wav</path>
+        <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine-new.wav</path>
         <mode>looped</mode>
          <condition>
          <less-than> 
@@ -43,7 +43,7 @@
 
     <engine>
         <name>engine</name>
-        <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine.wav</path>
+        <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine-new.wav</path>
         <mode>looped</mode>
          <condition>
           <greater-than>

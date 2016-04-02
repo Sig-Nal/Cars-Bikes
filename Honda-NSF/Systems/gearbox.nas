@@ -67,8 +67,8 @@ var loop = func {
 		clutch.setValue(0);
 	}
 	
-	#gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
-	gspeed = getprop("/velocities/groundspeed-kt") or 0;
+	gspeed = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
+	#gspeed = getprop("/velocities/groundspeed-kt") or 0;
 	var bwspeed = getprop("/gear/gear[1]/rollspeed-ms") or 0;
 	bwspeed = bwspeed*2.23694; # meter per secondes to miles per hour
 	
@@ -117,7 +117,7 @@ var loop = func {
 		#inertia = (fuel_weight.getValue() + weight.getValue())/245; # 245 max. weight and fuel
 		
 		# overspeed the engine
-		if(rpm.getValue() > maxrpm+200){
+		if(rpm.getValue() > maxrpm+400){
 			if(engine_rpm_regulation.getValue() < 1){
 				killed.setValue(killed.getValue() + 1/maxhealth);
 			}
@@ -162,6 +162,7 @@ var loop = func {
 			  setprop("/sim/weight[1]/weight-lb", throttle.getValue()*300);
 			}else if(fastcircuit.getValue() == 0.2){
 			  transmissionpower = 0.9*throttle.getValue()-propulsion.getValue()/maxrpm;
+			  setprop("/sim/weight[1]/weight-lb", 0);
 			}else if(fastcircuit.getValue() == 0.3){
 			  transmissionpower = 0.7*throttle.getValue()-propulsion.getValue()/maxrpm;
 			}else if(fastcircuit.getValue() == 0.4){
@@ -179,7 +180,6 @@ var loop = func {
 				rpm.setValue(newrpm);
 			}else{
 				newrpm = (maxrpm+minrpm)/vmax*gspeed;
-				#newrpm = (newrpm < lastrpm) ? (lastrpm - newrpm)/2 + newrpm: newrpm;
 				newrpm = (newrpm < minrpm + 250) ? minrpm + 250 : newrpm;
 				interpolate("/engines/engine/rpm",newrpm,0.125);
 			}
@@ -217,11 +217,11 @@ var loop = func {
 		}
 		
 		# Automatic RPM overspeed regulation
-		if(rpm.getValue() > maxrpm-400){
+		if(rpm.getValue() > maxrpm-970){
 			if(engine_rpm_regulation.getValue() == 1 ){
 				propulsion.setValue(0);
-				if (bwspeed > 20) engine_brake.setValue(1.0);
-				rpm.setValue(maxrpm-500);
+				if (bwspeed > 20) engine_brake.setValue(0.1);
+				rpm.setValue(maxrpm-890);
 				setprop("/controls/Honda-NSF/ctrl-light-overspeed", 1);
 			}else{
 				setprop("/controls/Honda-NSF/ctrl-light-overspeed", 1);

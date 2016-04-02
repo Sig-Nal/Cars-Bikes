@@ -45,6 +45,7 @@
 		<object-name>d-hms</object-name>
 		<object-name>d-km</object-name>
 		<object-name>d-zkm</object-name>
+		<object-name>d-hkm</object-name>
 		<object-name>d-tkm</object-name>
 		<object-name>d-ztkm</object-name>
 		<object-name>d-hms.001</object-name>
@@ -62,6 +63,18 @@
 		<object-name>digit-100</object-name>
 		<object-name>digit-gear</object-name>
 		<object-name>select</object-name>
+		<object-name>d-hms</object-name>
+		<object-name>d-km</object-name>
+		<object-name>d-zkm</object-name>
+		<object-name>d-hkm</object-name>
+		<object-name>d-tkm</object-name>
+		<object-name>d-ztkm</object-name>
+		<object-name>d-hms.001</object-name>
+		<object-name>d-km.001</object-name>
+		<object-name>d-zkm.001</object-name>
+		<object-name>d-hkm.001</object-name>
+		<object-name>d-tkm.001</object-name>
+		<object-name>d-ztkm.001</object-name>
 	</effect>
 
 	<model>

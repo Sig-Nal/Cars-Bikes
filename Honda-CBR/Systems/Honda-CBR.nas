@@ -7,6 +7,8 @@
 var config_dlg = gui.Dialog.new("/sim/gui/dialogs/config/dialog", getprop("/sim/aircraft-dir")~"/Systems/config.xml");
 var hangoffspeed = props.globals.initNode("/controls/hang-off-speed",0,"DOUBLE");
 var hangoffhdg = props.globals.initNode("/controls/hang-off-hdg",0,"DOUBLE");
+var hangoffviewdeg = props.globals.initNode("/controls/hang-off-view-deg",0,"DOUBLE");
+var steeringdamper = props.globals.initNode("/controls/steering-damper",1,"DOUBLE");
 var waiting = props.globals.initNode("/controls/waiting",0,"DOUBLE");
 var nosedown = props.globals.initNode("/controls/nose-down",0,"DOUBLE");
 
@@ -40,7 +42,9 @@ var forkcontrol = func{
 			f.setValue(r);
 		}
 	}else{
-		f.setValue(r);
+		var sensibility_fork = steeringdamper.getValue()*0.03;
+		sensibility_fork = (sensibility_fork < 0.1)? 0.1 : sensibility_fork;
+		interpolate("/controls/flight/fork", r, sensibility_fork);
 	}
 	if(bs > 38){
 		setprop("/controls/gear/brake-front", bl);
@@ -63,19 +67,29 @@ var forkcontrol = func{
 			setprop("/controls/Honda-CBR/driver-looks-back-right",1);
 		}else{
 			var hdgpos = 0;
-		    var posi = getprop("/controls/flight/aileron-manual") or 0;
+		    var posi = getprop("/controls/flight/aileron-manual") or 0;			
+			var sceneryposi = posi*45;
+			if(sceneryposi > 0){
+				sceneryposi = (sceneryposi > 18) ? 18 : sceneryposi;
+			}else{
+				sceneryposi = (sceneryposi < -18) ? -18 : sceneryposi;
+			}
 		  	if(posi > 0.0001 and getprop("/controls/hangoff") == 1){
 				hdgpos = 360 - 60*posi;
-				hdgpos = (hdgpos < 340) ? 340 : hdgpos;
+				hdgpos = (hdgpos < (360 - hangoffviewdeg.getValue())) ? 360 - hangoffviewdeg.getValue() : hdgpos;
 		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+				setprop("/sim/current-view/goal-roll-offset-deg", sceneryposi);
 		  	}else if (posi < -0.0001 and getprop("/controls/hangoff") == 1){
 				hdgpos = 60*abs(posi);
-				hdgpos = (hdgpos > 20) ? 20 : hdgpos;
+				hdgpos = (hdgpos > hangoffviewdeg.getValue()) ? hangoffviewdeg.getValue() : hdgpos;
 		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+				setprop("/sim/current-view/goal-roll-offset-deg", sceneryposi);
 			}else if (posi > 0 and posi < 0.0001 and getprop("/controls/hangoff") == 1){
 				setprop("/sim/current-view/goal-heading-offset-deg", 360);
+				setprop("/sim/current-view/goal-roll-offset-deg", 0);
 			}else{
 				setprop("/sim/current-view/goal-heading-offset-deg", 0);
+				setprop("/sim/current-view/goal-roll-offset-deg", 0);
 			}
 			setprop("/controls/Honda-CBR/driver-looks-back",0);
 			setprop("/controls/Honda-CBR/driver-looks-back-right",0);
@@ -95,6 +109,11 @@ var forkcontrol = func{
 };
 
 forkcontrol();
+
+# --- Help window for steering damper setting ---
+setlistener("/controls/steering-damper", func (sd){
+	help_win.write(sprintf("Steering damper setting: %.0f clicks", sd.getValue()));
+},1,0);
 
 var temp_fake_calc = func{
 
@@ -127,7 +146,7 @@ setlistener("/controls/gear/brake-left", func (state){
 	interpolate("/controls/nose-down", state,0.4);
 },0,1);
 
-setlistener("/devices/status/mice/mouse[0]/button[0]", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[3]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
@@ -136,7 +155,7 @@ setlistener("/devices/status/mice/mouse[0]/button[0]", func (state){
 	}
 },0,1);
 
-setlistener("/devices/status/mice/mouse[0]/button[1]", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[4]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
@@ -167,7 +186,11 @@ setlistener("/controls/flight/aileron", func (position){
 		}else{
 			var np = math.round(position*position*position*100);
 			np = np/100;
-			interpolate("/controls/flight/aileron-manual", np,0.1);
+			#print("NP: ", np);
+			# the *0.0625 is the calculation number for the 16clicks Oehlins steering damper
+			var sensibility = (np == 0 or abs(np) < steeringdamper.getValue()*0.0625) ? steeringdamper.getValue()*0.0625 : abs(np);
+			sensibility = (sensibility < 0.1)? 0.1 : sensibility;
+			interpolate("/controls/flight/aileron-manual", np, sensibility);
 		}
 	}
 });
@@ -189,8 +212,8 @@ setlistener("/surface-positions/left-aileron-pos-norm", func{
 	
 	if (omm){
 		if(cvnr == 0){
-			setprop("/sim/current-view/x-offset-m", math.sin(position*1.6)*(1.36+driverpos/5));
-			setprop("/sim/current-view/y-offset-m", math.cos(position*1.9)*(1.36+driverpos/4));
+			setprop("/sim/current-view/x-offset-m", math.sin(position*1.6)*(1.3+driverpos/5));
+			setprop("/sim/current-view/y-offset-m", math.cos(position*1.9)*(1.3+driverpos/4));
 			setprop("/sim/current-view/z-offset-m",driverview);	
 		} 
 	}else{
@@ -202,20 +225,20 @@ setlistener("/surface-positions/left-aileron-pos-norm", func{
 				factor = (abs(factor) > abs(position)) ? position : factor;
 				if(onwork == 0){
 					settimer(func{setprop("/controls/hangoff",1)},0.1);
-					interpolate("/sim/current-view/x-offset-m", math.sin(factor*1.8)*(1.34+driverpos/5),0.1);
-					interpolate("/sim/current-view/y-offset-m", math.cos(factor*2.1)*(1.36 - godown/1300 + nosedown.getValue()/12 + driverpos/4),0.1);
+					interpolate("/sim/current-view/x-offset-m", math.sin(factor*1.8)*(1.28+driverpos/5),0.1);
+					interpolate("/sim/current-view/y-offset-m", math.cos(factor*2.1)*(1.3 - godown/1300 + nosedown.getValue()/12 + driverpos/4),0.1);
 				}else{
-					setprop("/sim/current-view/x-offset-m", math.sin(factor*1.8)*(1.34+driverpos/5));
-					setprop("/sim/current-view/y-offset-m", math.cos(factor*2.1)*(1.36 - godown/1300 + nosedown.getValue()/12 + driverpos/4));
+					setprop("/sim/current-view/x-offset-m", math.sin(factor*1.8)*(1.28+driverpos/5));
+					setprop("/sim/current-view/y-offset-m", math.cos(factor*2.1)*(1.3 - godown/1300 + nosedown.getValue()/12 + driverpos/4));
 				}
 			}else{
 				if(onwork == 1){
-					interpolate("/sim/current-view/x-offset-m", math.sin(position*1.6)*(1.3+driverpos/5),0.1);
-					interpolate("/sim/current-view/y-offset-m", math.cos(position*1.9)*(1.36 - godown/1500 + nosedown.getValue()/12 + driverpos/4),0.1);
+					interpolate("/sim/current-view/x-offset-m", math.sin(position*1.6)*(1.24+driverpos/5),0.1);
+					interpolate("/sim/current-view/y-offset-m", math.cos(position*1.9)*(1.3 - godown/1500 + nosedown.getValue()/12 + driverpos/4),0.1);
 					settimer(func{setprop("/controls/hangoff",0)},0.1);
 				}else{
-					setprop("/sim/current-view/x-offset-m", math.sin(position*1.6)*(1.3+driverpos/5));
-					setprop("/sim/current-view/y-offset-m", math.cos(position*1.9)*(1.36 - godown/1500 + nosedown.getValue()/12 + driverpos/4));
+					setprop("/sim/current-view/x-offset-m", math.sin(position*1.6)*(1.24+driverpos/5));
+					setprop("/sim/current-view/y-offset-m", math.cos(position*1.9)*(1.3 - godown/1500 + nosedown.getValue()/12 + driverpos/4));
 				}
 			}
 			setprop("/sim/current-view/z-offset-m",driverview);	
@@ -267,8 +290,9 @@ setlistener("/controls/engines/engine[0]/throttle", func (position){
 
 setlistener("/gear/gear/rollspeed-ms", func (speed){
     var speed = speed.getValue();
+	var crnw = getprop("/sim/crashed") or 0;
     # only for manipulate the reset m function 
-	if (speed > 10) setprop("/controls/waiting", 1);
+	if (speed > 20 and !crnw) setprop("/controls/waiting", 1);
 	if(getprop("/instrumentation/Honda-CBR/speed-indicator/selection")){
 		if(speed > 0.1){
 			setprop("/instrumentation/Honda-CBR/speed-indicator/speed-meter", speed*3600/1000*0.621371); # mph

@@ -23,21 +23,15 @@
 
 	<engine>
 	    <name>enginehight</name>
-	    <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine.wav</path>
+	    <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine-new.wav</path>
 	    <mode>looped</mode>
  	     <condition>
-			 <and>
   		 		 <not>
 	  		 		 <equals>
 	   	      	   	  	<property>/sim/current-view/view-number</property>
 	  		   			<value>6</value>
 	  	   	 		 </equals>	
   	   	 		 </not>				 
-  		 		 <greater-than>
-   	      	   	  	<property>/engines/engine/rpm</property>
-  		   			<value>3000</value>
-  	   	 		</greater-than>
-			</and>
  	    </condition>
 	    <volume>
 	      <property>/engines/engine/mp-osi</property>
@@ -59,7 +53,7 @@
 	  
   	<engine>
   	    <name>enginehightout</name>
-  	    <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine.wav</path>
+  	    <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine-new.wav</path>
   	    <mode>looped</mode>
    	     <condition>
 			 <and>
@@ -67,10 +61,6 @@
    	      	   	  	<property>/sim/current-view/view-number</property>
   		   			<value>6</value>
   	   	 		 </equals>				 
-  		 		 <greater-than>
-   	      	   	  	<property>/engines/engine/rpm</property>
-  		   			<value>3000</value>
-  	   	 		</greater-than>
    			 	<less-than>
      	      	   <property>/engines/engine/killed</property>
    			   	   <value>0.95</value>
@@ -108,38 +98,6 @@
   	    <volume>
   	      <value>10.0</value>
   	    </volume>
-  	    <reference-dist>180</reference-dist>
-  	    <max-dist>500</max-dist>
-  	  </engine>
-	  
-  	<engine>
-  	    <name>enginelow</name>
-  	    <path>Aircraft/Kawa-ZX10R/Sounds/Kawa-ZX10R-engine-low.wav</path>
-  	    <mode>looped</mode>
-	     <condition>
-			 <less-than>
-			   <property>/engines/engine/rpm</property>
-			   <value>4000</value>
-		   </less-than>		 
-		   <greater-than>
- 	      	  	<property>/engines/engine/rpm</property>
-		   		<value>10</value>
-	   	 </greater-than>
-	    </condition>
-  	    <volume>
-  	      <property>/engines/engine/mp-osi</property>
-  	      <factor>0.05</factor>
-  	      <min>2</min>
-  	      <max>12</max>
-  	      <offset>0.001</offset>
-  	    </volume>
-  	    <pitch>
-  	      <property>/engines/engine/rpm</property>
-  	      <factor>0.0001</factor>
-  	      <min>0.001</min>
-  	      <max>2.0</max>
-  	      <offset>0.1</offset>
-  	    </pitch>
   	    <reference-dist>180</reference-dist>
   	    <max-dist>500</max-dist>
   	  </engine>

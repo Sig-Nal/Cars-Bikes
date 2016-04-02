@@ -27,11 +27,12 @@
 
   <animation>
     <type>material</type>
+    <object-name>oehlinssup</object-name>
+    <object-name>oehlinssup.001</object-name>
     <object-name>carrd</object-name>
     <object-name>carrd01</object-name>
     <object-name>carrd03</object-name>
     <object-name>carrd03.inner</object-name>
-    <object-name>carrd03.number</object-name>
     <object-name>screws</object-name>
     <object-name>carrd04</object-name>
     <object-name>carrd05</object-name>
@@ -126,9 +127,9 @@
 	<name>RPM</name>
     <path>Aircraft/Yamaha-YZF/Models/Instruments/combi/combi.xml</path>
     <offsets>
-      <x-m> -0.64 </x-m>
+      <x-m> -0.74 </x-m>
       <y-m> -0.0765 </y-m>
-      <z-m> 0.97 </z-m>
+      <z-m> 0.92 </z-m>
       <pitch-deg> -38 </pitch-deg>
     </offsets>
   </model>
@@ -173,6 +174,16 @@
     </condition>
   </animation>
   
+  <model>
+	<name>OEHLINS</name>
+    <path>Aircraft/Yamaha-YZF/Models/Instruments/oehlins/oehlins.xml</path>
+    <offsets>
+        <x-m> -0.52 </x-m>
+        <y-m> 0.0</y-m>
+        <z-m> 0.88 </z-m>
+    </offsets>
+  </model>
+    
   <model>
 	<name>SMOKE</name>
     <path>Aircraft/Yamaha-YZF/Effects/smoke.xml</path>
@@ -262,13 +273,15 @@
       <object-name>SI</object-name>
       <object-name>SL</object-name>
       <object-name>TRANSPONDER</object-name>
+      <object-name>OEHLINS</object-name>
+      <object-name>oehlinssup</object-name>
+      <object-name>oehlinssup.001</object-name>
       <object-name>Driver</object-name>
       <object-name>Driver_quick_glance_over_shoulder</object-name>
       <object-name>carrd</object-name>
       <object-name>carrd01</object-name>
       <object-name>carrd03</object-name>
       <object-name>carrd03.inner</object-name>
-      <object-name>carrd03.number</object-name>
       <object-name>screws</object-name>
       <object-name>carrd04</object-name>
       <object-name>carrd05</object-name>
@@ -339,13 +352,15 @@
         <object-name>SI</object-name>
         <object-name>SL</object-name>
         <object-name>TRANSPONDER</object-name>
+        <object-name>OEHLINS</object-name>
+        <object-name>oehlinssup</object-name>
+        <object-name>oehlinssup.001</object-name>
         <object-name>Driver</object-name>
         <object-name>Driver_quick_glance_over_shoulder</object-name>
         <object-name>carrd</object-name>
         <object-name>carrd01</object-name>
         <object-name>carrd03</object-name>
         <object-name>carrd03.inner</object-name>
-        <object-name>carrd03.number</object-name>
         <object-name>screws</object-name>
         <object-name>carrd04</object-name>
         <object-name>carrd05</object-name>
@@ -411,6 +426,8 @@
     <!-- front fork -->
     <animation>
   	  <type>rotate</type>
+        <object-name>OEHLINS</object-name>
+        <object-name>oehlinssup.001</object-name>
         <object-name>SL</object-name>
         <object-name>carrd05</object-name>
         <object-name>carrd06</object-name>

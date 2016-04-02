@@ -4,8 +4,10 @@
 #		This file is licenced under the terms of the GNU General Public Licence V2 or later
 ###############################################################################################
 var config_dlg = gui.Dialog.new("/sim/gui/dialogs/config/dialog", getprop("/sim/aircraft-dir")~"/Systems/config.xml");
-var hangoffspeed = props.globals.initNode("/controls/hang-off-speed",80,"DOUBLE");
+var hangoffspeed = props.globals.initNode("/controls/hang-off-speed",0,"DOUBLE");
 var hangoffhdg = props.globals.initNode("/controls/hang-off-hdg",0,"DOUBLE");
+var hangoffviewdeg = props.globals.initNode("/controls/hang-off-view-deg",0,"DOUBLE");
+var steeringdamper = props.globals.initNode("/controls/steering-damper",1,"DOUBLE");
 var waiting = props.globals.initNode("/controls/waiting",0,"DOUBLE");
 
 ################## Little Help Window on bottom of screen #################
@@ -38,7 +40,9 @@ var forkcontrol = func{
 			f.setValue(r);
 		}
 	}else{
-		f.setValue(r);
+		var sensibility_fork = steeringdamper.getValue()*0.03;
+		sensibility_fork = (sensibility_fork < 0.1)? 0.1 : sensibility_fork;
+		interpolate("/controls/flight/fork", r, sensibility_fork);
 	}
 	if(bs > 38){
 		setprop("/controls/gear/brake-front", bl);
@@ -62,16 +66,31 @@ var forkcontrol = func{
 		}else{
 			var hdgpos = 0;
 		    var posi = getprop("/controls/flight/aileron-manual") or 0;
+			var sceneryposi = posi*45;
+			if(sceneryposi > 0){
+				sceneryposi = (sceneryposi > 18) ? 18 : sceneryposi;
+			}else{
+				sceneryposi = (sceneryposi < -18) ? -18 : sceneryposi;
+			}
+			
 		  	if(posi > 0.0001 and getprop("/controls/hangoff") == 1){
-				hdgpos = 360 - 27*posi;
+				hdgpos = 360 - 60*posi;
+				hdgpos = (hdgpos < (360 - hangoffviewdeg.getValue())) ? 360 - hangoffviewdeg.getValue() : hdgpos;
+				#help_win.write(sprintf("Blickwinkel: %.2f", hdgpos));
 		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+				setprop("/sim/current-view/goal-roll-offset-deg", sceneryposi);
 		  	}else if (posi < -0.0001 and getprop("/controls/hangoff") == 1){
-				hdgpos = 27*abs(posi);
+				hdgpos = 60*abs(posi);
+				hdgpos = (hdgpos > hangoffviewdeg.getValue()) ? hangoffviewdeg.getValue() : hdgpos;
+				#help_win.write(sprintf("Blickwinkel: %.2f", hdgpos));
 		  		setprop("/sim/current-view/goal-heading-offset-deg", hdgpos);
+				setprop("/sim/current-view/goal-roll-offset-deg", sceneryposi);
 			}else if (posi > 0 and posi < 0.0001 and getprop("/controls/hangoff") == 1){
 				setprop("/sim/current-view/goal-heading-offset-deg", 360);
+				setprop("/sim/current-view/goal-roll-offset-deg", 0);
 			}else{
 				setprop("/sim/current-view/goal-heading-offset-deg", 0);
+				setprop("/sim/current-view/goal-roll-offset-deg", 0);
 			}
 			setprop("/controls/Kawa-ZX10R/driver-looks-back",0);
 			setprop("/controls/Kawa-ZX10R/driver-looks-back-right",0);
@@ -92,7 +111,12 @@ var forkcontrol = func{
 
 forkcontrol();
 
-setlistener("/devices/status/mice/mouse[0]/button[0]", func (state){
+# --- Help window for steering damper setting ---
+setlistener("/controls/steering-damper", func (sd){
+	help_win.write(sprintf("Steering damper setting: %.0f clicks", sd.getValue()));
+},1,0);
+
+setlistener("/devices/status/mice/mouse[0]/button[3]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
@@ -101,7 +125,7 @@ setlistener("/devices/status/mice/mouse[0]/button[0]", func (state){
 	}
 },0,1);
 
-setlistener("/devices/status/mice/mouse[0]/button[1]", func (state){
+setlistener("/devices/status/mice/mouse[0]/button[4]", func (state){
     var state = state.getBoolValue();
 	# helper for the steering
 	var ms = getprop("/devices/status/mice/mouse/mode") or 0;
@@ -131,7 +155,11 @@ setlistener("/controls/flight/aileron", func (position){
 		}else{
 			var np = math.round(position*position*position*100);
 			np = np/100;
-			interpolate("/controls/flight/aileron-manual", np,0.1);
+			#print("NP: ", np);
+			# the *0.0625 is the calculation number for the 16clicks Oehlins steering damper
+			var sensibility = (np == 0 or abs(np) < steeringdamper.getValue()*0.0625) ? steeringdamper.getValue()*0.0625 : abs(np);
+			sensibility = (sensibility < 0.1)? 0.1 : sensibility;
+			interpolate("/controls/flight/aileron-manual", np, sensibility);
 		}
 	}
 });
@@ -162,7 +190,7 @@ setlistener("/surface-positions/left-aileron-pos-norm", func{
 			var godown = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") or 0;
 			var lookup = getprop("/controls/gear/brake-right") or 0;
 			var onwork = getprop("/controls/hangoff") or 0;
-			if(godown > 10 and godown < hangoffspeed.getValue()){
+			if(godown > 0 and godown < hangoffspeed.getValue()){
 				var factor = (position <= 0)? -0.6 : 0.6;
 				factor = (abs(factor) > abs(position)) ? position : factor;
 				if(onwork == 0){
@@ -223,8 +251,9 @@ setlistener("/controls/engines/engine[0]/throttle", func (position){
 setlistener("/instrumentation/airspeed-indicator/indicated-speed-kt", func (speed){
 	var groundspeed = getprop("/velocities/groundspeed-kt") or 0;
     var speed = speed.getValue();
+	var crnw = getprop("/sim/crashed") or 0;
     # only for manipulate the reset m function 
-	if (speed > 10) setprop("/controls/waiting", 1);
+	if (speed > 20 and !crnw) setprop("/controls/waiting", 1);
 	if(getprop("/instrumentation/Kawa-ZX10R/speed-indicator/selection")){
 		if(groundspeed > 0.1){
 			setprop("/instrumentation/Kawa-ZX10R/speed-indicator/speed-meter", speed*1.15077945); # mph
@@ -357,7 +386,7 @@ setlistener("sim/model/start-idling", func()
 			help_win_red.write("Is everything ok with you?");
 		}else{
 			help_win_red.write("5 SECONDS WAITING FOR REPLACEMENT!");
-			settimer(func{setprop("/controls/waiting", 0)}, 3);
+			settimer(func{setprop("/controls/waiting", 0)}, 1);
 		}
    }
   }, 1, 1);
